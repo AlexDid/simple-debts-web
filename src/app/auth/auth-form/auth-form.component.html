@@ -1,0 +1,35 @@
+<div class="form" [formGroup]="form">
+  <mat-form-field>
+    <label>
+      <input
+        type="email"
+        placeholder="Email"
+        matInput
+        formControlName="email"
+      >
+    </label>
+  </mat-form-field>
+  <mat-form-field>
+    <label>
+      <input
+        type="password"
+        placeholder="Password"
+        matInput
+        formControlName="password"
+        minlength="6"
+      >
+    </label>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="passwordConfirmation">
+    <label>
+      <input
+        type="password"
+        placeholder="Password"
+        matInput
+        formControlName="passwordConfirm"
+        minlength="6"
+      >
+    </label>
+  </mat-form-field>
+</div>

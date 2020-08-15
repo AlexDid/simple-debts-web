@@ -1,0 +1,25 @@
+<div *ngIf="isLoading; else form" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<ng-template #form>
+  <app-auth-form
+    (formChanges)="setAuthForm($event)"
+  ></app-auth-form>
+  <div class="buttons">
+    <button
+      mat-button
+      (click)="toggleFormMode()"
+    >
+      {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
+    </button>
+
+    <button
+      mat-button
+      [disabled]="!isFormValid"
+      (click)="submitForm()"
+    >
+      Submit
+    </button>
+  </div>
+</ng-template>
