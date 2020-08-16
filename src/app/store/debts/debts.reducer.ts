@@ -1,4 +1,4 @@
-import { createReducer, on } from '@ngrx/store';
+import { Action, createReducer, on } from '@ngrx/store';
 import * as DebtsActions from './debts.actions';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 import { Debt } from './models';
@@ -7,9 +7,9 @@ export const debtsFeatureKey = 'debts';
 
 export const adapter = createEntityAdapter<Debt>();
 
-export interface State extends EntityState<Debt> {}
+export interface DebtsState extends EntityState<Debt> {}
 
-export const initialState: State = adapter.getInitialState();
+export const initialState: DebtsState = adapter.getInitialState();
 
 export const reducer = createReducer(
   initialState,
@@ -28,3 +28,6 @@ export const reducer = createReducer(
 
 );
 
+export function debtsReducer(state: DebtsState | undefined, action: Action): DebtsState {
+  return reducer(state, action);
+}

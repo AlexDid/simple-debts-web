@@ -4,8 +4,9 @@ import { getAuthFeatureState } from '../store/auth';
 import * as AuthActions from '../store/auth/auth.actions';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../store';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NestedFormDataDto, ReturnUrl, SubscriptionComponent } from '../core/models';
+import { selectMergedRoute } from '../store/router/router.selectors';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -25,8 +26,7 @@ export class AuthComponent extends SubscriptionComponent implements OnInit, OnDe
 
   constructor(
     private store: Store<AppState>,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {
     super();
   }
@@ -67,8 +67,7 @@ export class AuthComponent extends SubscriptionComponent implements OnInit, OnDe
 
   private subscribeOnAuthComplete(): void {
     this.store.pipe(
-      select(getAuthFeatureState)
-    ).pipe(
+      select(getAuthFeatureState),
       this.getTakeUntilPipe()
     ).subscribe(({user, isLoading}) => {
       this.isLoading = isLoading;
@@ -80,9 +79,10 @@ export class AuthComponent extends SubscriptionComponent implements OnInit, OnDe
   }
 
   private getQueryParams(): void {
-    this.activatedRoute
-      .queryParams
-      .pipe(this.getTakeUntilPipe())
-      .subscribe(params => this.returnUrl = (params as ReturnUrl).returnUrl);
+    this.store.pipe(
+      select(selectMergedRoute),
+      this.getTakeUntilPipe()
+    )
+    .subscribe(({queryParams}) => this.returnUrl = (queryParams as ReturnUrl).returnUrl);
   }
 }

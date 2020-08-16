@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DebtsComponent } from './debts.component';
 import { DebtsListComponent } from './debts-list/debts-list.component';
 import { DebtsDetailsComponent } from './debts-details/debts-details.component';
-
-export const debtIdRouteParam = 'debtId';
+import { debtIdRouteParam } from '../store/debts/debts.selectors';
 
 const routes: Routes = [
   {

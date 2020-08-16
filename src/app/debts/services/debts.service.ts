@@ -2,12 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiServiceAbstract } from '../../core/models';
 import { CreateMultipleDebtDto, CreateSingleDebtDto, Debt, DebtListResponseDto } from '../../store/debts/models';
+import { HttpClient } from '@angular/common/http';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DebtsService extends ApiServiceAbstract {
   readonly urlPath = 'debts';
   readonly multipleDebtPath = 'multiple';
   readonly singleDebtPath = 'single';
+
+  constructor(
+    protected http: HttpClient
+  ) {
+    super(http);
+  }
 
   getDebtsList(): Observable<DebtListResponseDto> {
     return this.http.get<DebtListResponseDto>(this.url);

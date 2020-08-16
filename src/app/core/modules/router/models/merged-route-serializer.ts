@@ -1,34 +1,34 @@
 import {RouterStateSerializer} from '@ngrx/router-store';
 import {ActivatedRouteSnapshot, Data, Params, RouterStateSnapshot} from '@angular/router';
-import {MergedRoute} from './merged-route';
+import {RouterState} from './router-state';
 
 
-export class MergedRouterStateSerializer implements RouterStateSerializer<MergedRoute> {
-  serialize(routerState: RouterStateSnapshot): MergedRoute {
+export class MergedRouterStateSerializer implements RouterStateSerializer<RouterState> {
+  serialize(routerState: RouterStateSnapshot): RouterState {
     return {
       url: routerState.url,
-      params: mergeRouteParams(routerState.root, r => r.params),
-      queryParams: mergeRouteParams(routerState.root, r => r.queryParams),
-      data: mergeRouteData(routerState.root)
+      params: this.mergeRouteParams(routerState.root, r => r.params),
+      queryParams: this.mergeRouteParams(routerState.root, r => r.queryParams),
+      data: this.mergeRouteData(routerState.root)
     };
   }
-}
 
-function mergeRouteParams(route: ActivatedRouteSnapshot, getter: (r: ActivatedRouteSnapshot) => Params): Params {
-  if (!route) {
-    return {};
-  }
-  const currentParams = getter(route);
-  const primaryChild = route.children.find(c => c.outlet === 'primary') || route.firstChild;
-  return {...currentParams, ...mergeRouteParams(primaryChild, getter)};
-}
-
-function mergeRouteData(route: ActivatedRouteSnapshot): Data {
-  if (!route) {
-    return {};
+  private mergeRouteParams(route: ActivatedRouteSnapshot, getter: (r: ActivatedRouteSnapshot) => Params): Params {
+    if (!route) {
+      return {};
+    }
+    const currentParams = getter(route);
+    const primaryChild = route.children.find(c => c.outlet === 'primary') || route.firstChild;
+    return {...currentParams, ...this.mergeRouteParams(primaryChild, getter)};
   }
 
-  const currentData = route.data;
-  const primaryChild = route.children.find(c => c.outlet === 'primary') || route.firstChild;
-  return {...currentData, ...mergeRouteData(primaryChild)};
+  private mergeRouteData(route: ActivatedRouteSnapshot): Data {
+    if (!route) {
+      return {};
+    }
+
+    const currentData = route.data;
+    const primaryChild = route.children.find(c => c.outlet === 'primary') || route.firstChild;
+    return {...currentData, ...this.mergeRouteData(primaryChild)};
+  }
 }

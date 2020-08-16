@@ -1,19 +1,25 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromDebts from './debts.reducer';
 import { selectMergedRoute } from '../router/router.selectors';
-import { debtIdRouteParam } from '../../debts/debts-routing.module';
+import { plainToClass } from 'class-transformer';
+import { Debt } from './models';
 
-export const selectDebtsState = createFeatureSelector<fromDebts.State>(
+export const debtIdRouteParam = 'debtId';
+
+export const selectDebtsState = createFeatureSelector<fromDebts.DebtsState>(
   fromDebts.debtsFeatureKey
 );
 
 export const selectDebts = createSelector(
-  selectDebtsState,
-  state => state.entities
+  createSelector(
+    selectDebtsState,
+    fromDebts.adapter.getSelectors().selectAll,
+  ),
+  (debts) => plainToClass(Debt, debts)
 );
 
 export const selectSelectedDebt = createSelector(
   selectDebtsState,
   selectMergedRoute,
-  (state, route) => state.entities[route.params[debtIdRouteParam]]
+  ({entities}, {params}) => params ? plainToClass(Debt, entities[params[debtIdRouteParam]]) : null
 );

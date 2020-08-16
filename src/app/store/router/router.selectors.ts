@@ -1,7 +1,9 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import { MergedRouteReducerState, routerStateConfig } from '../../core/modules/router';
+import { MergedRouteReducerState } from '../../core/modules/router';
 
-export const selectRouterReducerState = createFeatureSelector<MergedRouteReducerState>(routerStateConfig.stateKey);
+export const routerFeatureKey = 'router';
+
+export const selectRouterReducerState = createFeatureSelector<MergedRouteReducerState>(routerFeatureKey);
 
 export const selectMergedRoute = createSelector(
   selectRouterReducerState,

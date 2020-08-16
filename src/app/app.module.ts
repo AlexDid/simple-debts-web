@@ -10,7 +10,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { CoreModule } from './core/core.module';
 import { appEffects, appReducer } from './store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RouterStoreModule } from './core/modules/router';
 
 @NgModule({
@@ -19,14 +18,13 @@ import { RouterStoreModule } from './core/modules/router';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    RouterStoreModule,
     CoreModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(appEffects),
+    RouterStoreModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     BrowserAnimationsModule,
-    StoreRouterConnectingModule.forRoot(),
+    AppRoutingModule,
   ],
   bootstrap: [AppComponent]
 })
