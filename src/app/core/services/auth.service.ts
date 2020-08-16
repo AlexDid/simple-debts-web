@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiServiceAbstract } from '../models/api-service.abstract';
 import { tap } from 'rxjs/operators';
 import { FullAuthData } from '../../store/auth/models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LocalStorageHelper } from '../helpers/local-storage.helper';
 import { Router } from '@angular/router';
-import { ReturnUrl } from '../models/query-params/return-url';
+import { ApiServiceAbstract, ReturnUrl } from '../models';
 
 @Injectable({
   providedIn: 'root'

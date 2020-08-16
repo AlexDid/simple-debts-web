@@ -1,4 +1,4 @@
-import { authReducer, AuthEffects, AuthState } from './auth';
+import { authReducer, AuthEffects, AuthState, authFeatureKey } from './auth';
 import { Action } from '@ngrx/store';
 
 export * from './auth';
@@ -6,11 +6,11 @@ export * from './auth';
 type FeatureState = AuthState;
 
 export interface AppState {
-  auth: AuthState;
+  [authFeatureKey]: AuthState;
 }
 
 export const appReducer = Object.fromEntries(new Map<keyof AppState, (feature: FeatureState, action: Action) => FeatureState>([
-  ['auth', authReducer]
+  [authFeatureKey, authReducer]
 ]));
 
 export const appEffects = [AuthEffects];

@@ -1,7 +1,9 @@
 import { AuthUser, RefreshToken, Token } from './models';
 import { Action, createReducer, on } from '@ngrx/store';
-import * as authActions from './auth.actions';
+import * as AuthActions from './auth.actions';
 import { LocalStorageHelper } from '../../core/helpers/local-storage.helper';
+
+export const authFeatureKey = 'auth';
 
 export interface AuthState extends AuthUser, Token, RefreshToken {
   isLoading: boolean;
@@ -19,22 +21,22 @@ export const initialAuthState: AuthState = Object.assign({}, emptyState, LocalSt
 const authReducerInternal = createReducer(
   initialAuthState,
 
-  on(authActions.login, state => ({
+  on(AuthActions.login, state => ({
     ...state,
     isLoading: true
   })),
 
-  on(authActions.signUp, state => ({
+  on(AuthActions.signUp, state => ({
     ...state,
     isLoading: true
   })),
 
-  on(authActions.authFailed, state => ({
+  on(AuthActions.authFailed, state => ({
     ...state,
     isLoading: false
   })),
 
-  on(authActions.authCompleted, (state, { user, token, refreshToken }) => {
+  on(AuthActions.authCompleted, (state, { user, token, refreshToken }) => {
     return {
       ...state,
       user,
@@ -44,7 +46,7 @@ const authReducerInternal = createReducer(
     };
   }),
 
-  on(authActions.logout, (_, {}) => {
+  on(AuthActions.logout, (_, {}) => {
     return emptyState;
   })
 );

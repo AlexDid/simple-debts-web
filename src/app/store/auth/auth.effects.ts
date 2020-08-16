@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../core/services/auth.service';
-import * as authActions from './auth.actions';
+import * as AuthActions from './auth.actions';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,31 +16,31 @@ export class AuthEffects {
 
   @Effect()
   login$ = this.actions$.pipe(
-    ofType(authActions.login),
+    ofType(AuthActions.login),
     switchMap(({email, password}) => this.authService.login(email, password).pipe(
-      map((authData) => authActions.authCompleted(authData)),
-      catchError((error) => of(authActions.authFailed(error)))
+      map((authData) => AuthActions.authCompleted(authData)),
+      catchError((error) => of(AuthActions.authFailed(error)))
     )),
   );
 
   @Effect()
   signUp$ = this.actions$.pipe(
-    ofType(authActions.signUp),
+    ofType(AuthActions.signUp),
     switchMap(({email, password}) => this.authService.signUp(email, password).pipe(
-      map(authData => authActions.authCompleted(authData)),
-      catchError(error => of(authActions.authFailed(error)))
+      map(authData => AuthActions.authCompleted(authData)),
+      catchError(error => of(AuthActions.authFailed(error)))
     ))
   );
 
   @Effect({ dispatch: false })
   logout$ = this.actions$.pipe(
-    ofType(authActions.logout),
+    ofType(AuthActions.logout),
     tap(() => this.authService.logout())
   );
 
-  @Effect({ dispatch: false })
+  @Effect()
   authError$ = this.actions$.pipe(
-    ofType(authActions.authFailed),
-    map((error) => this.snackbar.open(error.error, null, {duration: 3000}))
+    ofType(AuthActions.authFailed),
+    tap((error) => this.snackbar.open(error.error, null, {duration: 3000}))
   );
 }

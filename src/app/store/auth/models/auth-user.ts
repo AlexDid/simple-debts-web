@@ -1,4 +1,4 @@
-import { User } from '../../../core/models/user';
+import { User } from '../../../core/models';
 
 export interface AuthUser {
   readonly user: User;

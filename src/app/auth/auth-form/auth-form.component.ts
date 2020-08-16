@@ -1,15 +1,15 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordConfirmationValidator } from '../helpers/password-confirmation.validator';
 import { AuthForm } from '../../store/auth/models';
-import { NestedFormDataDto } from '../../core/models/nested-form-data.dto';
+import { NestedFormDataDto, SubscriptionComponent } from '../../core/models';
 
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss']
 })
-export class AuthFormComponent implements OnInit {
+export class AuthFormComponent extends SubscriptionComponent implements OnInit, OnDestroy {
 
   @Input()
   set passwordConfirmation(value: boolean) {
@@ -30,12 +30,18 @@ export class AuthFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.buildForm();
     this.togglePasswordConfirmation();
     this.setupFormEmitter();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe();
   }
 
 
@@ -50,6 +56,9 @@ export class AuthFormComponent implements OnInit {
   private setupFormEmitter(): void {
     this.form
       .valueChanges
+      .pipe(
+        this.getTakeUntilPipe()
+      )
       .subscribe(value => this.formChanges.emit({value, valid: this.form.valid}));
   }
 

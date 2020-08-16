@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { AuthForm, FullAuthData } from './models';
-import { ErrorObject } from '../../core/models/error.interface';
+import { ErrorDto } from '../../core/models';
 
 export const login = createAction(
   '[Auth] Login',
@@ -20,7 +20,7 @@ export const authCompleted = createAction(
 );
 export const authFailed = createAction(
   '[Auth] Auth Failed',
-  props<ErrorObject>()
+  props<ErrorDto>()
 );
 
 export const logout = createAction('[Auth] Logout');
