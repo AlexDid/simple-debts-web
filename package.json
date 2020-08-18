@@ -5,9 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "deploy:dev": "npm run build && firebase deploy -P default",
+    "deploy:prod": "npm run build:prod && firebase deploy -P prod",
+    "precommit": "npm run deploy:dev"
   },
   "private": true,
   "dependencies": {
