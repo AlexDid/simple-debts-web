@@ -6,7 +6,7 @@
   height: $listHeight;
   overflow: auto;
 
-  * {
+  ::ng-deep * {
     &:focus {
       outline: none;
     }

@@ -35,20 +35,25 @@
   .debt-info {
     margin-left: 20px;
 
+    h3, p {
+      width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: pre;
+    }
+
     h3 {
       font-size: 26px;
       font-weight: 400;
       margin: 0;
-      width: 150px;
       height: 29px;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     p {
       font-size: 22px;
       margin: 0;
       margin-top: 10px;
+      height: 25px;
 
       &.red {
         color: $red;
