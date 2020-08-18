@@ -1,7 +1,7 @@
 import { AuthUser, RefreshToken, Token } from './models';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as AuthActions from './auth.actions';
-import { LocalStorageHelper } from '../../core/helpers/local-storage.helper';
+import { LocalStorageHelper } from '../../core/helpers';
 
 export const authFeatureKey = 'auth';
 
@@ -27,6 +27,11 @@ const authReducerInternal = createReducer(
   })),
 
   on(AuthActions.signUp, state => ({
+    ...state,
+    isLoading: true
+  })),
+
+  on(AuthActions.facebookLogin, state => ({
     ...state,
     isLoading: true
   })),
