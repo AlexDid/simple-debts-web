@@ -24,6 +24,24 @@ export class AuthEffects {
   );
 
   @Effect()
+  facebookLogin$ = this.actions$.pipe(
+    ofType(AuthActions.facebookLogin),
+    switchMap(() => this.authService.facebookLoginAttempt().pipe(
+      map(user => AuthActions.facebookLoginCompleted(user)),
+      catchError((error) => of(AuthActions.authFailed(error)))
+    )),
+  );
+
+  @Effect()
+  facebookLoginCompleted$ = this.actions$.pipe(
+    ofType(AuthActions.facebookLoginCompleted),
+    switchMap(user => this.authService.loginWithFbToken(user).pipe(
+      map(authData => AuthActions.authCompleted(authData)),
+      catchError((error) => of(AuthActions.authFailed(error)))
+    )),
+  );
+
+  @Effect()
   signUp$ = this.actions$.pipe(
     ofType(AuthActions.signUp),
     switchMap(({email, password}) => this.authService.signUp(email, password).pipe(

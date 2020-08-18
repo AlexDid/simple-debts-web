@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { AuthForm, FullAuthData } from './models';
 import { ErrorDto } from '../../core/models';
+import { SocialUser } from 'angularx-social-login';
 
 export const login = createAction(
   '[Auth] Login',
@@ -12,6 +13,10 @@ export const signUp = createAction(
 );
 export const facebookLogin = createAction(
   '[Auth] Facebook Login'
+);
+export const facebookLoginCompleted = createAction(
+  '[Auth] Facebook Login Completed',
+  props<SocialUser>()
 );
 
 export const authCompleted = createAction(

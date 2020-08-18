@@ -52,6 +52,10 @@ export class AuthComponent extends SubscriptionComponent implements OnInit, OnDe
     }
   }
 
+  facebookLogin(): void {
+    this.store.dispatch(AuthActions.facebookLogin());
+  }
+
   toggleFormMode(): void {
     this.isLogin = !this.isLogin;
   }

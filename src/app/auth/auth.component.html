@@ -29,6 +29,13 @@
       >
         {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
       </button>
+
+      <button
+        mat-button
+        (click)="facebookLogin()"
+      >
+        Facebook Login
+      </button>
     </div>
   </ng-template>
 </mat-card>

@@ -11,14 +11,23 @@ import { CoreModule } from './core/core.module';
 import { appEffects, appReducer } from './store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterStoreModule } from './core/modules/router';
+import { SocialLoginModule } from 'angularx-social-login';
+import { provideConfig } from './auth/config';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useFactory: provideConfig
+    }
+  ],
   imports: [
     BrowserModule,
     CoreModule,
+    SocialLoginModule,
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot(appEffects),
     RouterStoreModule,
