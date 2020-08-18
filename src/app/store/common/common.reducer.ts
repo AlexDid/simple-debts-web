@@ -1,14 +1,23 @@
-import { CurrencyListDto } from './models';
+import { Currency } from './models';
 import { Action, createReducer, on } from '@ngrx/store';
 import * as CommonActions from './common.actions';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
 export const commonFeatureKey = 'common';
 
-// tslint:disable-next-line:no-empty-interface
-export interface CommonState extends CurrencyListDto {}
+export interface CurrenciesState extends EntityState<Currency> {}
+
+export interface CommonState {
+  currencies: CurrenciesState;
+}
+
+export const adapter = createEntityAdapter<Currency>({
+  selectId: currency => currency.currency,
+  sortComparer: (a, b) => a.currency.localeCompare(b.currency)
+});
 
 export const initialState: CommonState = {
-  currencies: []
+  currencies: adapter.getInitialState()
 };
 
 export const reducer = createReducer(
@@ -16,7 +25,7 @@ export const reducer = createReducer(
 
   on(CommonActions.loadCurrenciesSuccess, (state, {currencies}) => ({
     ...state,
-    currencies
+    currencies: adapter.setAll(currencies, state.currencies)
   })),
 );
 
