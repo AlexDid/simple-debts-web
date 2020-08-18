@@ -4,7 +4,6 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Debt } from '../../store/debts/models';
 import { SubscriptionComponent } from '../../core/models';
-import { loadDebts } from '../../store/debts/debts.actions';
 import { selectDebts } from '../../store/debts/debts.selectors';
 
 @Component({
@@ -24,7 +23,6 @@ export class DebtsListComponent extends SubscriptionComponent implements OnInit,
 
   ngOnInit(): void {
     this.getDebts();
-    this.fetchDebts();
   }
 
   ngOnDestroy(): void {
@@ -36,10 +34,6 @@ export class DebtsListComponent extends SubscriptionComponent implements OnInit,
       select(selectDebts),
       this.getTakeUntilPipe()
     );
-  }
-
-  private fetchDebts(): void {
-    this.store.dispatch(loadDebts());
   }
 
 }

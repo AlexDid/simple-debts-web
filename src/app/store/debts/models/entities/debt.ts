@@ -21,8 +21,8 @@ export class Debt {
   get moneyStatus(): MoneyStatus {
     switch (this.moneyReceiver) {
       case null: return MoneyStatus.NONE;
-      case this.user.id: return MoneyStatus.GIVE;
-      default: return MoneyStatus.TAKE;
+      case this.user.id: return MoneyStatus.GIVEN;
+      default: return MoneyStatus.TAKEN;
     }
   }
 

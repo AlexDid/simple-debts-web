@@ -1,0 +1,5 @@
+@import "~src/styles/colors";
+
+app-debts-list-item + app-debts-list-item {
+  border-top: 1px solid $lightGray;
+}

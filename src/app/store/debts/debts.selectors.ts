@@ -3,6 +3,7 @@ import * as fromDebts from './debts.reducer';
 import { selectMergedRoute } from '../router/router.selectors';
 import { plainToClass } from 'class-transformer';
 import { Debt } from './models';
+import { selectCurrenciesDictionary } from '../common/common.selectors';
 
 export const debtIdRouteParam = 'debtId';
 
@@ -15,7 +16,15 @@ export const selectDebts = createSelector(
     selectDebtsState,
     fromDebts.adapter.getSelectors().selectAll,
   ),
-  (debts) => plainToClass(Debt, debts)
+  selectCurrenciesDictionary,
+  (debts, currencies) => {
+    const updatedDebts = debts.map(debt => ({
+      ...debt,
+      currency: currencies[debt.currency]?.symbol || debt.currency
+    }));
+
+    return plainToClass(Debt, updatedDebts);
+  }
 );
 
 export const selectSelectedDebt = createSelector(
