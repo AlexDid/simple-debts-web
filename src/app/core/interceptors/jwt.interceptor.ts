@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LocalStorageHelper } from '../helpers/local-storage.helper';
+import { LocalStorageHelper } from '../helpers';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()

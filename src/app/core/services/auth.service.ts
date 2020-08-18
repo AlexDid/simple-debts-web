@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { FullAuthData } from '../../store/auth/models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LocalStorageHelper } from '../helpers/local-storage.helper';
+import { LocalStorageHelper } from '../helpers';
 import { Router } from '@angular/router';
 import { ApiServiceAbstract, ReturnUrl } from '../models';
 import { FacebookLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';

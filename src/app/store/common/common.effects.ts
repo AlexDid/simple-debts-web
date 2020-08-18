@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../index';
 import { selectCurrencyISOs } from './common.selectors';
 import { Currency } from './models';
+import { ErrorSnackbarHelper } from '../../core/helpers';
 
 @Injectable()
 export class CommonEffects {
@@ -34,10 +35,10 @@ export class CommonEffects {
     ))
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   showError$ = this.actions$.pipe(
     ofType(CommonActions.loadCurrenciesError),
-    tap((error) => this.snackbar.open(error.error, null, {duration: 3000}))
+    tap(({error}) => ErrorSnackbarHelper.showErrorSnackbar(this.snackbar, error))
   );
 
   private removeDuplicates(currencies: Currency[]): Currency[] {

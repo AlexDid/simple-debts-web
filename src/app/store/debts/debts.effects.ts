@@ -7,6 +7,7 @@ import * as DebtsActions from './debts.actions';
 import { DebtsService } from '../../debts/services/debts.service';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ErrorSnackbarHelper } from '../../core/helpers';
 
 
 @Injectable()
@@ -141,10 +142,10 @@ export class DebtsEffects {
     ))
   );
 
-  @Effect()
+  @Effect({ dispatch: false })
   showError$ = this.actions$.pipe(
     ofType(...this.errorActions),
-    tap((error) => this.snackbar.open(error.error, null, {duration: 3000}))
+    tap(({error}) => ErrorSnackbarHelper.showErrorSnackbar(this.snackbar, error))
   );
 
 }

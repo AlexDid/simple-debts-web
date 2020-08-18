@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { LocalStorageHelper } from '../helpers/local-storage.helper';
+import { LocalStorageHelper } from '../helpers';
 
 @Injectable({
   providedIn: 'root'

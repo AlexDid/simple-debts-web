@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
-import { LocalStorageHelper } from '../helpers/local-storage.helper';
+import { LocalStorageHelper } from '../helpers';
 import { Observable, throwError } from 'rxjs';
 import { catchError, first, switchMap } from 'rxjs/operators';
 
