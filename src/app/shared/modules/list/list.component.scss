@@ -1,0 +1,18 @@
+@import "~src/styles/colors";
+@import "~src/styles/variables";
+
+:host {
+  display: block;
+  height: $listHeight;
+  overflow: auto;
+
+  * {
+    &:focus {
+      outline: none;
+    }
+  }
+
+  * + * {
+    border-top: 1px solid $lightGray;
+  }
+}

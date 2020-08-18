@@ -15,6 +15,7 @@ export const reducer = createReducer(
   initialState,
 
   on(DebtsActions.loadDebtsSuccess, (state, {debts}) => adapter.setAll(debts, state)),
+  on(DebtsActions.loadDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.deleteDebtSuccess, (state, {id}) => adapter.removeOne(id, state)),
   on(DebtsActions.createMultipleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),
   on(DebtsActions.createSingleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),

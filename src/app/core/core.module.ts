@@ -5,6 +5,7 @@ import { AuthService } from './services/auth.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorInterceptor, JwtInterceptor } from './interceptors';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [],
@@ -17,10 +18,12 @@ import { ErrorInterceptor, JwtInterceptor } from './interceptors';
     CommonModule,
     HttpClientModule,
     MatSnackBarModule,
+    MatIconModule,
   ],
   exports: [
     HttpClientModule,
     MatSnackBarModule,
+    MatIconModule,
   ]
 })
 export class CoreModule { }

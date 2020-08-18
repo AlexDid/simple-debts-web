@@ -1,0 +1,10 @@
+<div class="user-image" [ngClass]="{ 'no-border': !pictureBorder }">
+  <ng-content select="[picture]"></ng-content>
+</div>
+<div class="debt-info">
+  <h3>{{ title }}</h3>
+  <p [ngClass]="subtitleColor">{{ subtitle }}</p>
+</div>
+<div *ngIf="message" class="message" [ngClass]="message.color">
+  {{ message.text }}
+</div>

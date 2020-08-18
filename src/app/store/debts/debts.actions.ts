@@ -14,6 +14,19 @@ export const loadDebtsError = createAction(
   props<ErrorDto>()
 );
 
+export const loadDebt = createAction(
+  '[Debts] Load Debt',
+  props<IdDto>()
+);
+export const loadDebtSuccess = createAction(
+  '[Debts] Load Debt Success',
+  props<DebtDto>()
+);
+export const loadDebtError = createAction(
+  '[Debts] Load Debt Error',
+  props<ErrorDto>()
+);
+
 export const deleteDebt = createAction(
   '[Debts] Delete Debt',
   props<IdDto>()

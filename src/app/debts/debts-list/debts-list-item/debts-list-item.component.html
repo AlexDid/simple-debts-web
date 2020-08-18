@@ -1,10 +1,8 @@
-<div class="user-image">
-  <img [src]="debt.user.picture" alt="avatar">
-</div>
-<div class="debt-info">
-  <h3>{{ debt.user.name }}</h3>
-  <p [ngClass]="summaryColor">{{ debt.currency + debt.summary }}</p>
-</div>
-<div *ngIf="message" class="message">
-  {{ message }}
-</div>
+<app-list-item
+  [title]="debt.user.name"
+  [subtitle]="debt.currency + debt.summary"
+  [subtitleColor]="summaryColor"
+  [message]="message"
+>
+  <img picture [src]="debt.user.picture" alt="avatar">
+</app-list-item>

@@ -1,0 +1,12 @@
+<app-list-item
+  [pictureBorder]="false"
+  [title]="operation.moneyAmount.toString()"
+  [subtitle]="operation.description"
+  [message]="message"
+>
+  <mat-icon
+    picture
+    [ngClass]="summaryColor"
+    [svgIcon]="icon"
+  ></mat-icon>
+</app-list-item>

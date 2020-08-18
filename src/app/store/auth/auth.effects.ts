@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { AuthService } from '../../core/services/auth.service';
 import * as AuthActions from './auth.actions';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -17,7 +17,7 @@ export class AuthEffects {
   @Effect()
   login$ = this.actions$.pipe(
     ofType(AuthActions.login),
-    switchMap(({email, password}) => this.authService.login(email, password).pipe(
+    mergeMap(({email, password}) => this.authService.login(email, password).pipe(
       map((authData) => AuthActions.authCompleted(authData)),
       catchError((error) => of(AuthActions.authFailed(error)))
     )),
@@ -26,7 +26,7 @@ export class AuthEffects {
   @Effect()
   facebookLogin$ = this.actions$.pipe(
     ofType(AuthActions.facebookLogin),
-    switchMap(() => this.authService.facebookLoginAttempt().pipe(
+    mergeMap(() => this.authService.facebookLoginAttempt().pipe(
       map(user => AuthActions.facebookLoginCompleted(user)),
       catchError((error) => of(AuthActions.authFailed(error)))
     )),
@@ -35,7 +35,7 @@ export class AuthEffects {
   @Effect()
   facebookLoginCompleted$ = this.actions$.pipe(
     ofType(AuthActions.facebookLoginCompleted),
-    switchMap(user => this.authService.loginWithFbToken(user).pipe(
+    mergeMap(user => this.authService.loginWithFbToken(user).pipe(
       map(authData => AuthActions.authCompleted(authData)),
       catchError((error) => of(AuthActions.authFailed(error)))
     )),
@@ -44,7 +44,7 @@ export class AuthEffects {
   @Effect()
   signUp$ = this.actions$.pipe(
     ofType(AuthActions.signUp),
-    switchMap(({email, password}) => this.authService.signUp(email, password).pipe(
+    mergeMap(({email, password}) => this.authService.signUp(email, password).pipe(
       map(authData => AuthActions.authCompleted(authData)),
       catchError(error => of(AuthActions.authFailed(error)))
     ))

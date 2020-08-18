@@ -5,3 +5,4 @@ export * from './query-params/return-url';
 export * from './architecture/api-service.abstract';
 export * from './architecture/subscription-component';
 export * from './entities/user';
+export * from './icons/icons.enum';

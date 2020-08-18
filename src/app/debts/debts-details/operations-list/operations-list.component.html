@@ -1,0 +1,7 @@
+<app-list>
+  <app-operation-list-item
+    *ngFor="let operation of operations; let i = index"
+    [operation]="operation"
+    [userId]="userId"
+  ></app-operation-list-item>
+</app-list>

@@ -1,0 +1,20 @@
+@import "~src/styles/colors";
+
+mat-icon {
+  width: 34px;
+  height: 34px;
+
+  &.red {
+    &::ng-deep {
+      fill: $red;
+      transform: rotate(-90deg);
+    }
+  }
+
+  &.green {
+    &::ng-deep {
+      fill: $green;
+      transform: rotate(90deg);
+    }
+  }
+}

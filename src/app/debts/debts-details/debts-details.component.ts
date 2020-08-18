@@ -4,6 +4,8 @@ import { AppState } from '../../store';
 import { selectSelectedDebt } from '../../store/debts/debts.selectors';
 import { SubscriptionComponent } from '../../core/models';
 import { Debt } from '../../store/debts/models';
+import { filter, tap } from 'rxjs/operators';
+import { loadDebt } from '../../store/debts/debts.actions';
 
 @Component({
   selector: 'app-debts-details',
@@ -31,7 +33,15 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
   private getSelectedDebt(): void {
     this.store.pipe(
       select(selectSelectedDebt),
+      filter(debt => !!debt),
+      tap(debt => this.loadDebt(debt)),
       this.getTakeUntilPipe()
     ).subscribe(debt => this.debt = debt);
+  }
+
+  private loadDebt({id, moneyOperations}: Debt): void {
+    if (!moneyOperations?.length) {
+      this.store.dispatch(loadDebt({id}));
+    }
   }
 }

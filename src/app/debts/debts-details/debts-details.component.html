@@ -1,1 +1,5 @@
-<p>debts-details works!</p>
+<app-operations-list
+  *ngIf="debt"
+  [operations]="debt.moneyOperations"
+  [userId]="debt.user.id"
+></app-operations-list>

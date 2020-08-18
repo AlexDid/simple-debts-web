@@ -1,5 +1,7 @@
-<app-debts-list-item
-  *ngFor="let debt of debts$ | async"
-  [debt]="debt"
-  [routerLink]="[debt.id]"
-></app-debts-list-item>
+<app-list>
+  <app-debts-list-item
+    *ngFor="let debt of debts$ | async"
+    [debt]="debt"
+    [routerLink]="[debt.id]"
+  ></app-debts-list-item>
+</app-list>

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Debt, DebtStatus } from '../../../store/debts/models';
 import { moneyStatusColorsMap } from '../../data';
 import { MoneyStatusColor } from '../../models';
+import { ListItemMessage, ListItemMessageColor } from '../../../shared/modules/list/list-item/models';
 
 @Component({
   selector: 'app-debts-list-item',
@@ -19,14 +20,23 @@ export class DebtsListItemComponent {
     return this.moneyStatusColorsMap.get(this.debt.moneyStatus);
   }
 
-  get message(): string {
+  get message(): ListItemMessage {
     switch (this.debt.status) {
       case DebtStatus.CREATION_AWAITING || DebtStatus.CONNECT_USER:
-        return this.debt.isUserStatusAcceptor ? 'NEW' : 'WAITING';
+        return {
+          text: this.debt.isUserStatusAcceptor ? 'NEW' : 'WAITING',
+          color: ListItemMessageColor.ACCENT
+        };
       case DebtStatus.USER_DELETED:
-        return 'USER LEFT';
+        return {
+          text: 'USER LEFT',
+          color: ListItemMessageColor.RED
+        };
       case DebtStatus.CHANGE_AWAITING:
-        return this.debt.isUserStatusAcceptor ? 'NEW OPERATIONS' : null;
+        return this.debt.isUserStatusAcceptor ? {
+          text: 'NEW OPERATIONS',
+          color: ListItemMessageColor.ACCENT
+        } : null;
       default:
         return null;
     }
