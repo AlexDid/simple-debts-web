@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../store';
 import { selectSelectedDebt } from '../../store/debts/debts.selectors';
@@ -12,7 +12,7 @@ import { loadDebt } from '../../store/debts/debts.actions';
   templateUrl: './debts-details.component.html',
   styleUrls: ['./debts-details.component.scss']
 })
-export class DebtsDetailsComponent extends SubscriptionComponent implements OnInit, OnDestroy {
+export class DebtsDetailsComponent extends SubscriptionComponent implements OnInit {
 
   debt: Debt;
 
@@ -24,10 +24,6 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
 
   ngOnInit(): void {
     this.getSelectedDebt();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe();
   }
 
   private getSelectedDebt(): void {

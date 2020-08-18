@@ -1,15 +1,15 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { passwordConfirmationValidator } from '../helpers/password-confirmation.validator';
 import { AuthForm } from '../../store/auth/models';
-import { NestedFormDataDto, SubscriptionComponent } from '../../core/models';
+import { NestedFormComponent } from '../../core/models';
 
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
   styleUrls: ['./auth-form.component.scss']
 })
-export class AuthFormComponent extends SubscriptionComponent implements OnInit, OnDestroy {
+export class AuthFormComponent extends NestedFormComponent<AuthForm> implements OnInit {
 
   @Input()
   set passwordConfirmation(value: boolean) {
@@ -21,50 +21,25 @@ export class AuthFormComponent extends SubscriptionComponent implements OnInit, 
     return this.showPasswordConfirmation;
   }
 
-  @Output()
-  formChanges = new EventEmitter<NestedFormDataDto<AuthForm>>();
-
-  form: FormGroup;
-
   private showPasswordConfirmation = false;
 
-  constructor(
-    private fb: FormBuilder
-  ) {
-    super();
-  }
-
   ngOnInit(): void {
-    this.buildForm();
+    super.ngOnInit();
     this.togglePasswordConfirmation();
-    this.setupFormEmitter();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe();
-  }
-
-
-  private buildForm(): void {
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      passwordConfirm: ['', [Validators.required, passwordConfirmationValidator('password')]]
-    });
-  }
-
-  private setupFormEmitter(): void {
-    this.form
-      .valueChanges
-      .pipe(
-        this.getTakeUntilPipe()
-      )
-      .subscribe(value => this.formChanges.emit({value, valid: this.form.valid}));
+  // tslint:disable-next-line:no-any
+  protected getFormGroup(): { [key in keyof AuthForm]: any } {
+    return {
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      passwordConfirm: ['', passwordConfirmationValidator<AuthForm>('password')]
+    };
   }
 
   private togglePasswordConfirmation(): void {
     if (this.form) {
-      const control = this.form.get('passwordConfirm');
+      const control = this.form.get('passwordConfirm' as keyof AuthForm);
       this.showPasswordConfirmation ? control.enable() : control.disable();
     }
   }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthForm } from '../store/auth/models';
 import { getAuthFeatureState } from '../store/auth';
 import * as AuthActions from '../store/auth/auth.actions';
@@ -13,15 +13,17 @@ import { Router } from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent extends SubscriptionComponent implements OnInit, OnDestroy {
+export class AuthComponent extends SubscriptionComponent implements OnInit {
 
   isLoading = false;
   isLogin = true;
   isFormValid = false;
+  authForm: AuthForm = {
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  };
 
-  error = '';
-
-  private authForm: AuthForm;
   private returnUrl: string;
 
   constructor(
@@ -36,10 +38,6 @@ export class AuthComponent extends SubscriptionComponent implements OnInit, OnDe
     this.subscribeOnAuthComplete();
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe();
-  }
-
 
   setAuthForm(form: NestedFormDataDto<AuthForm>): void {
     this.authForm = form.value;
@@ -49,6 +47,11 @@ export class AuthComponent extends SubscriptionComponent implements OnInit, OnDe
   submitForm(): void {
     if (this.isFormValid) {
       this.isLogin ? this.login() : this.signUp();
+      this.authForm = {
+        ...this.authForm,
+        password: '',
+        passwordConfirm: ''
+      };
     }
   }
 

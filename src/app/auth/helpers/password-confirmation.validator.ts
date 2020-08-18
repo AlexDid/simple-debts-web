@@ -1,8 +1,8 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export function passwordConfirmationValidator(passwordControlName: string): ValidatorFn {
+export function passwordConfirmationValidator<T>(passwordControlName: keyof T): ValidatorFn {
   return (control: AbstractControl) => {
-    const password = control.parent?.get(passwordControlName)?.value;
+    const password = control.parent?.get(passwordControlName as string)?.value;
     if (!password) {
       return null;
     }

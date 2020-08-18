@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppState } from '../../store';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { selectDebts } from '../../store/debts/debts.selectors';
   templateUrl: './debts-list.component.html',
   styleUrls: ['./debts-list.component.scss']
 })
-export class DebtsListComponent extends SubscriptionComponent implements OnInit, OnDestroy {
+export class DebtsListComponent extends SubscriptionComponent implements OnInit {
 
   debts$: Observable<Debt[]>;
 
@@ -23,10 +23,6 @@ export class DebtsListComponent extends SubscriptionComponent implements OnInit,
 
   ngOnInit(): void {
     this.getDebts();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe();
   }
 
   private getDebts(): void {
