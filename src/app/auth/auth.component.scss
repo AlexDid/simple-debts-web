@@ -1,18 +1,28 @@
+@import "~src/styles/colors";
+
 :host {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: $accent;
 
   mat-card {
     width: 75%;
     max-width: 400px;
-    padding: 20px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
+
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      font-weight: 400;
+      margin-bottom: 40px;
+    }
 
     .spinner {
       display: flex;
@@ -27,6 +37,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+
+      .submit {
+        color: white;
+        width: 260px;
+      }
 
       * + * {
         margin-top: 15px;

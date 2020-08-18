@@ -4,6 +4,8 @@
   </div>
 
   <ng-template #form>
+    <h1>Simple Debts</h1>
+
     <app-auth-form
       [passwordConfirmation]="!isLogin"
       (formChanges)="setAuthForm($event)"
@@ -11,19 +13,21 @@
 
     <div class="buttons">
       <button
+        class="submit"
         mat-button
-        (click)="toggleFormMode()"
+        mat-flat-button
+        color="primary"
+        [disabled]="!isFormValid"
+        (click)="submitForm()"
       >
-        {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
+        {{ isLogin ? 'Login' : 'Sign Up' }}
       </button>
 
       <button
         mat-button
-        mat-raised-button
-        [disabled]="!isFormValid"
-        (click)="submitForm()"
+        (click)="toggleFormMode()"
       >
-        Submit
+        {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
       </button>
     </div>
   </ng-template>

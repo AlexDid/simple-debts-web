@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from './store';
+import { AppState, selectUserInfo } from './store';
 import { loadCurrencies } from './store/common/common.actions';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,9 @@ export class AppComponent implements OnInit {
   }
 
   private loadCommonData(): void {
-    this.store.dispatch(loadCurrencies());
+    this.store.select(selectUserInfo).pipe(
+      filter(user => !!user)
+    ).subscribe(() => this.store.dispatch(loadCurrencies()));
   }
 
 }
