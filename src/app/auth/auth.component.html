@@ -24,17 +24,19 @@
       </button>
 
       <button
+        class="facebook-button"
         mat-button
-        (click)="toggleFormMode()"
+        mat-flat-button
+        (click)="facebookLogin()"
       >
-        {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
+        Login with Facebook
       </button>
 
       <button
         mat-button
-        (click)="facebookLogin()"
+        (click)="toggleFormMode()"
       >
-        Facebook Login
+        {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
       </button>
     </div>
   </ng-template>

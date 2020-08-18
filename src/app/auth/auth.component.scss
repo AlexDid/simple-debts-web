@@ -38,9 +38,13 @@
       justify-content: center;
       align-items: center;
 
-      .submit {
+      .submit, .facebook-button {
         color: white;
         width: 260px;
+      }
+
+      .facebook-button {
+        background-color: royalblue;
       }
 
       * + * {
