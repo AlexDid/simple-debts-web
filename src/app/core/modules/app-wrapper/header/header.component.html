@@ -1,0 +1,37 @@
+<div class="avatar-container">
+  <div class="avatar">
+    <img [src]="picture" alt="avatar">
+  </div>
+</div>
+
+<div class="header">
+  <div class="action">
+    <button
+      *ngIf="config.back"
+      mat-icon-button
+      (click)="back()"
+    >
+      <mat-icon
+        [svgIcon]="backIcon"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <h1 class="title">
+    {{ title }}
+  </h1>
+
+  <div class="action">
+    <button
+      *ngIf="config.refresh"
+      mat-icon-button
+      (click)="refresh()"
+    >
+      <mat-icon
+        class="refresh-icon"
+        [ngClass]="{ 'refreshing': isRefreshing }"
+        [svgIcon]="refreshIcon"
+      ></mat-icon>
+    </button>
+  </div>
+</div>

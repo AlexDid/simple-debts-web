@@ -1,4 +1,4 @@
-import {createFeatureSelector, createSelector} from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { MergedRouteReducerState } from '../../core/modules/router';
 
 export const routerFeatureKey = 'router';
@@ -8,4 +8,9 @@ export const selectRouterReducerState = createFeatureSelector<MergedRouteReducer
 export const selectMergedRoute = createSelector(
   selectRouterReducerState,
   (routerReducerState) => routerReducerState.state
+);
+
+export const selectRouteData = createSelector(
+  selectRouterReducerState,
+  routerState => routerState?.state?.data
 );

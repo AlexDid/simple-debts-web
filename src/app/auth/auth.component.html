@@ -1,44 +1,42 @@
-<mat-card>
-  <div *ngIf="isLoading; else form" class="spinner">
-    <mat-spinner [diameter]="40"></mat-spinner>
+<div *ngIf="isLoading; else form" class="spinner">
+  <mat-spinner [diameter]="40"></mat-spinner>
+</div>
+
+<ng-template #form>
+  <h1>Simple Debts 😎</h1>
+
+  <app-auth-form
+    [formValue]="authForm"
+    [passwordConfirmation]="!isLogin"
+    (formChanges)="setAuthForm($event)"
+  ></app-auth-form>
+
+  <div class="buttons">
+    <button
+      class="submit"
+      mat-button
+      mat-flat-button
+      color="primary"
+      [disabled]="!isFormValid"
+      (click)="submitForm()"
+    >
+      {{ isLogin ? 'Login' : 'Sign Up' }}
+    </button>
+
+    <button
+      class="facebook-button"
+      mat-button
+      mat-flat-button
+      (click)="facebookLogin()"
+    >
+      Login with Facebook
+    </button>
+
+    <button
+      mat-button
+      (click)="toggleFormMode()"
+    >
+      {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
+    </button>
   </div>
-
-  <ng-template #form>
-    <h1>Simple Debts 😎</h1>
-
-    <app-auth-form
-      [formValue]="authForm"
-      [passwordConfirmation]="!isLogin"
-      (formChanges)="setAuthForm($event)"
-    ></app-auth-form>
-
-    <div class="buttons">
-      <button
-        class="submit"
-        mat-button
-        mat-flat-button
-        color="primary"
-        [disabled]="!isFormValid"
-        (click)="submitForm()"
-      >
-        {{ isLogin ? 'Login' : 'Sign Up' }}
-      </button>
-
-      <button
-        class="facebook-button"
-        mat-button
-        mat-flat-button
-        (click)="facebookLogin()"
-      >
-        Login with Facebook
-      </button>
-
-      <button
-        mat-button
-        (click)="toggleFormMode()"
-      >
-        {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
-      </button>
-    </div>
-  </ng-template>
-</mat-card>
+</ng-template>

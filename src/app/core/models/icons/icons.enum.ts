@@ -1,3 +1,4 @@
 export enum Icons {
-  ARROW_BACK = 'arrow-back'
+  ARROW_BACK = 'arrow-back',
+  REFRESH = 'refresh'
 }

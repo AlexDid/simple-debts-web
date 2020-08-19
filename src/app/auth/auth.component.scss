@@ -1,55 +1,44 @@
 @import "~src/styles/colors";
 
 :host {
-  height: 100vh;
-  width: 100vw;
+  padding: 20px 120px 40px 120px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  background-color: $accent;
+  align-items: stretch;
 
-  mat-card {
-    width: 75%;
-    max-width: 400px;
+  h1 {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 400;
+    margin-bottom: 40px;
+  }
+
+  .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 40px;
+  }
+
+  .buttons {
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: stretch;
+    align-items: center;
 
-    h1 {
-      text-align: center;
-      font-size: 48px;
-      font-weight: 400;
-      margin-bottom: 40px;
+    .submit, .facebook-button {
+      color: white;
+      width: 260px;
     }
 
-    .spinner {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px;
+    .facebook-button {
+      background-color: royalblue;
     }
 
-    .buttons {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      .submit, .facebook-button {
-        color: white;
-        width: 260px;
-      }
-
-      .facebook-button {
-        background-color: royalblue;
-      }
-
-      * + * {
-        margin-top: 15px;
-      }
+    * + * {
+      margin-top: 15px;
     }
   }
 }

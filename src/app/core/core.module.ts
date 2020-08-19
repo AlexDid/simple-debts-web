@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ErrorInterceptor, JwtInterceptor } from './interceptors';
 import { MatIconModule } from '@angular/material/icon';
+import { AppWrapperModule } from './modules/app-wrapper/app-wrapper.module';
 
 @NgModule({
   declarations: [],
@@ -19,11 +20,13 @@ import { MatIconModule } from '@angular/material/icon';
     HttpClientModule,
     MatSnackBarModule,
     MatIconModule,
+    AppWrapperModule
   ],
   exports: [
     HttpClientModule,
     MatSnackBarModule,
     MatIconModule,
+    AppWrapperModule
   ]
 })
 export class CoreModule { }

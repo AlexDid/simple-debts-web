@@ -1,0 +1,7 @@
+<mat-card>
+  <app-header
+    *ngIf="config.header"
+    [config]="config"
+  ></app-header>
+  <ng-content></ng-content>
+</mat-card>

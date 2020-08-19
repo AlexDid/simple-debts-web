@@ -4,6 +4,7 @@ import { selectMergedRoute } from '../router/router.selectors';
 import { plainToClass } from 'class-transformer';
 import { Debt } from './models';
 import { selectCurrenciesDictionary } from '../common/common.selectors';
+import { Dictionary } from '@ngrx/entity';
 
 export const debtIdRouteParam = 'debtId';
 
@@ -11,24 +12,30 @@ export const selectDebtsState = createFeatureSelector<fromDebts.DebtsState>(
   fromDebts.debtsFeatureKey
 );
 
-export const selectDebts = createSelector(
+export const selectDebtsEntities = createSelector(
   createSelector(
     selectDebtsState,
-    fromDebts.adapter.getSelectors().selectAll,
+    fromDebts.adapter.getSelectors().selectEntities,
   ),
   selectCurrenciesDictionary,
   (debts, currencies) => {
-    const updatedDebts = debts.map(debt => ({
-      ...debt,
-      currency: currencies[debt.currency]?.symbol || debt.currency
+    const copy = {...debts};
+    Object.keys(copy).forEach(key => copy[key] = plainToClass(Debt, {
+      ...copy[key],
+      currency: currencies[copy[key].currency]?.symbol || copy[key].currency
     }));
 
-    return plainToClass(Debt, updatedDebts);
+    return copy as Dictionary<Debt>;
   }
 );
 
+export const selectDebts = createSelector(
+  selectDebtsEntities,
+  (debts) => Object.values(debts)
+);
+
 export const selectSelectedDebt = createSelector(
-  selectDebtsState,
+  selectDebtsEntities,
   selectMergedRoute,
-  ({entities}, {params}) => params ? plainToClass(Debt, entities[params[debtIdRouteParam]]) : null
+  (debts, {params}) => params ? plainToClass(Debt, debts[params[debtIdRouteParam]]) as Debt : null
 );

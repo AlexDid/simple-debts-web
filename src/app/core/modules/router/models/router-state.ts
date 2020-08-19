@@ -1,11 +1,12 @@
-import {Data, Params} from '@angular/router';
-import {RouterReducerState} from '@ngrx/router-store';
+import { Params } from '@angular/router';
+import { RouterReducerState } from '@ngrx/router-store';
+import { AppWrapperConfig } from './app-wrapper-config';
 
 export interface RouterState {
   url: string;
   queryParams: Params;
   params: Params;
-  data: Data;
+  data: AppWrapperConfig;
 }
 
 export type MergedRouteReducerState = RouterReducerState<RouterState>;

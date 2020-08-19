@@ -16,6 +16,8 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
 
   debt: Debt;
 
+  private loaded = false;
+
   constructor(
     private store: Store<AppState>
   ) {
@@ -36,7 +38,8 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
   }
 
   private loadDebt({id, moneyOperations}: Debt): void {
-    if (!moneyOperations?.length) {
+    if (!moneyOperations?.length && !this.loaded) {
+      this.loaded = true;
       this.store.dispatch(loadDebt({id}));
     }
   }

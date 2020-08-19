@@ -24,10 +24,13 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
 
       if (logoutErrors.includes(err.status) && loggedUser) {
-        this.authService.logout();
         return this.authService.refreshToken(loggedUser.refreshToken).pipe(
           first(),
           switchMap(() => next.handle(request.clone())),
+          catchError(e => {
+            this.authService.logout();
+            return throwError(e);
+          })
         );
       }
 
