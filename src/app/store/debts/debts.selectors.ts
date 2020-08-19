@@ -12,6 +12,11 @@ export const selectDebtsState = createFeatureSelector<fromDebts.DebtsState>(
   fromDebts.debtsFeatureKey
 );
 
+export const selectDebtsLoadedStatus = createSelector(
+  selectDebtsState,
+  state => state.isLoaded
+);
+
 export const selectDebtsEntities = createSelector(
   createSelector(
     selectDebtsState,

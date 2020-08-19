@@ -7,14 +7,21 @@ export const debtsFeatureKey = 'debts';
 
 export const adapter = createEntityAdapter<Debt>();
 
-export interface DebtsState extends EntityState<Debt> {}
+export interface DebtsState extends EntityState<Debt> {
+  isLoaded: boolean;
+}
 
-export const initialState: DebtsState = adapter.getInitialState();
+export const initialState: DebtsState = adapter.getInitialState({
+  isLoaded: false,
+});
 
 export const reducer = createReducer(
   initialState,
 
-  on(DebtsActions.loadDebtsSuccess, (state, {debts}) => adapter.setAll(debts, state)),
+  on(DebtsActions.loadDebtsSuccess, (state, {debts}) => ({
+    ...adapter.setAll(debts, state),
+    isLoaded: true
+  })),
   on(DebtsActions.loadDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.deleteDebtSuccess, (state, {id}) => adapter.removeOne(id, state)),
   on(DebtsActions.createMultipleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),

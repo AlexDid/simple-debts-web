@@ -56,21 +56,23 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
   }
 
   refresh(): void {
-    let actionDto: ActionDto;
-    if (this.currentDebt) {
-      actionDto = {
-        action: DebtsActions.loadDebt({id: this.currentDebt.id}),
-        completeAction: DebtsActions.loadDebtSuccess,
-        errorAction: DebtsActions.loadDebtError
-      };
-    } else {
-      actionDto = {
-        action: DebtsActions.loadDebts(),
-        completeAction: DebtsActions.loadDebtsSuccess,
-        errorAction: DebtsActions.loadDebtsError
-      };
+    if (!this.isRefreshing) {
+      let actionDto: ActionDto;
+      if (this.currentDebt) {
+        actionDto = {
+          action: DebtsActions.loadDebt({id: this.currentDebt.id}),
+          completeAction: DebtsActions.loadDebtSuccess,
+          errorAction: DebtsActions.loadDebtError
+        };
+      } else {
+        actionDto = {
+          action: DebtsActions.loadDebts(),
+          completeAction: DebtsActions.loadDebtsSuccess,
+          errorAction: DebtsActions.loadDebtsError
+        };
+      }
+      this.store.dispatch(ControlsActions.refresh(actionDto));
     }
-    this.store.dispatch(ControlsActions.refresh(actionDto));
   }
 
   private getHeaderUser(): void {

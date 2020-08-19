@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Debt } from '../../store/debts/models';
 import { SubscriptionComponent } from '../../core/models';
-import { selectDebts } from '../../store/debts/debts.selectors';
+import { selectDebts, selectDebtsLoadedStatus } from '../../store/debts/debts.selectors';
 
 @Component({
   selector: 'app-debts-list',
@@ -15,6 +15,8 @@ export class DebtsListComponent extends SubscriptionComponent implements OnInit 
 
   debts$: Observable<Debt[]>;
 
+  isLoaded = false;
+
   constructor(
     private store: Store<AppState>
   ) {
@@ -22,6 +24,7 @@ export class DebtsListComponent extends SubscriptionComponent implements OnInit 
   }
 
   ngOnInit(): void {
+    this.getLoadedStatus();
     this.getDebts();
   }
 
@@ -30,6 +33,12 @@ export class DebtsListComponent extends SubscriptionComponent implements OnInit 
       select(selectDebts),
       this.getTakeUntilPipe()
     );
+  }
+
+  private getLoadedStatus(): void {
+    this.store.select(selectDebtsLoadedStatus).pipe(
+      this.getTakeUntilPipe()
+    ).subscribe(isLoaded => this.isLoaded = isLoaded);
   }
 
 }

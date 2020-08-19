@@ -1,7 +1,20 @@
 <app-list>
-  <app-operation-list-item
-    *ngFor="let operation of operations; let i = index"
-    [operation]="operation"
-    [userId]="userId"
-  ></app-operation-list-item>
+  <app-spinner-container
+    *ngIf="!operations"
+  ></app-spinner-container>
+
+  <app-empty-list
+    *ngIf="operations?.length === 0; else list"
+    emoji="🤔"
+    header="Hmmm.... <br> looks like there are no operations yet"
+    subtitle="press one of the buttons below to add one"
+  ></app-empty-list>
+
+  <ng-template #list>
+    <app-operation-list-item
+      *ngFor="let operation of operations; let i = index"
+      [operation]="operation"
+      [userId]="userId"
+    ></app-operation-list-item>
+  </ng-template>
 </app-list>

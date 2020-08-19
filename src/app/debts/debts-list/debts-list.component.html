@@ -1,7 +1,22 @@
 <app-list>
-  <app-debts-list-item
-    *ngFor="let debt of debts$ | async"
-    [debt]="debt"
-    [routerLink]="[debt.id]"
-  ></app-debts-list-item>
+  <app-spinner-container
+    *ngIf="!isLoaded; else debts"
+  ></app-spinner-container>
+
+  <ng-template #debts>
+    <app-empty-list
+      *ngIf="(debts$ | async)?.length === 0; else list"
+      emoji="👋"
+      header="Hey <br> welcome to Simple Debts"
+      subtitle="press '+' button on the right to start"
+    ></app-empty-list>
+
+    <ng-template #list>
+      <app-debts-list-item
+        *ngFor="let debt of debts$ | async"
+        [debt]="debt"
+        [routerLink]="[debt.id]"
+      ></app-debts-list-item>
+    </ng-template>
+  </ng-template>
 </app-list>
