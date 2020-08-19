@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { LocalStorageHelper } from '../helpers';
 import { Observable, throwError } from 'rxjs';
@@ -26,7 +26,9 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (logoutErrors.includes(err.status) && loggedUser) {
         return this.authService.refreshToken(loggedUser.refreshToken).pipe(
           first(),
-          switchMap(() => next.handle(request.clone())),
+          switchMap(({token}) => next.handle(request.clone({
+            headers: new HttpHeaders().append('Authorization', `Bearer ${token}`)
+          }))),
           catchError(e => {
             this.authService.logout();
             return throwError(e);
