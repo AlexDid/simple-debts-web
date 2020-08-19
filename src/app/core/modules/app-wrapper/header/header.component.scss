@@ -15,10 +15,23 @@
       align-items: center;
       justify-content: center;
 
-      .refresh-icon {
+      button {
+        transition: 300ms;
+        opacity: .2;
 
-        &.refreshing {
-          animation: refreshAnimation 1.2s infinite;
+        &:hover {
+          opacity: 1;
+        }
+
+        &.refresh-button {
+
+          &.refreshing {
+            opacity: 1;
+
+            mat-icon {
+              animation: refreshAnimation 1.2s infinite;
+            }
+          }
         }
       }
     }

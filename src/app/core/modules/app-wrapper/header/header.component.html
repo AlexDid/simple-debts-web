@@ -23,13 +23,13 @@
 
   <div class="action">
     <button
+      class="refresh-button"
+      [ngClass]="{ 'refreshing': isRefreshing }"
       *ngIf="config.refresh"
       mat-icon-button
       (click)="refresh()"
     >
       <mat-icon
-        class="refresh-icon"
-        [ngClass]="{ 'refreshing': isRefreshing }"
         [svgIcon]="refreshIcon"
       ></mat-icon>
     </button>
