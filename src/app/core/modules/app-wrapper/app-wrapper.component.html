@@ -4,4 +4,19 @@
     [config]="config"
   ></app-header>
   <ng-content></ng-content>
+  <div class="outside-controls">
+    <app-outside-button
+      [button]="getButton('addDebt')"
+      (click)="addDebt()"
+    ></app-outside-button>
+    <app-outside-button
+      [button]="getButton('deleteDebt')"
+      (click)="deleteDebt()"
+    ></app-outside-button>
+    <app-outside-button
+      class="logout"
+      [button]="getButton('logout')"
+      (click)="logout()"
+    ></app-outside-button>
+  </div>
 </mat-card>

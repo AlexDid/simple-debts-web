@@ -1,4 +1,5 @@
 @import "~src/styles/colors";
+@import "~src/styles/variables";
 
 :host {
   display: flex;
@@ -13,5 +14,25 @@
     max-width: 600px;
     max-height: 80%;
     padding: 0;
+  }
+
+  .outside-controls {
+    position: absolute;
+    height: $listHeight;
+    width: 200px;
+    bottom: 0;
+    right: -220px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-sizing: border-box;
+
+    app-outside-button {
+
+      &.logout {
+        margin-top: auto;
+      }
+    }
   }
 }

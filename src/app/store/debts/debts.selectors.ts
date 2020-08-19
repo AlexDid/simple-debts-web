@@ -42,5 +42,5 @@ export const selectDebts = createSelector(
 export const selectSelectedDebt = createSelector(
   selectDebtsEntities,
   selectMergedRoute,
-  (debts, {params}) => params ? plainToClass(Debt, debts[params[debtIdRouteParam]]) as Debt : null
+  (debts, router) => router?.params ? plainToClass(Debt, debts[router.params[debtIdRouteParam]]) as Debt : null
 );

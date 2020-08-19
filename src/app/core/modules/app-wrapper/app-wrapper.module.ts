@@ -5,10 +5,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from './header/header.component';
+import { OutsideButtonComponent } from './outside-button/outside-button.component';
 
 
 @NgModule({
-  declarations: [AppWrapperComponent, HeaderComponent],
+  declarations: [AppWrapperComponent, HeaderComponent, OutsideButtonComponent],
   exports: [
     AppWrapperComponent
   ],

@@ -12,6 +12,7 @@ import { OperationListItemComponent } from './debts-details/operations-list/oper
 import { MatCardModule } from '@angular/material/card';
 import { ListModule } from '../shared/modules/list/list.module';
 import { MatIconModule } from '@angular/material/icon';
+import { AddDebtComponent } from './add-debt/add-debt.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MatIconModule } from '@angular/material/icon';
     DebtsDetailsComponent,
     DebtsComponent,
     OperationsListComponent,
-    OperationListItemComponent
+    OperationListItemComponent,
+    AddDebtComponent
   ],
   providers: [
     DebtsService

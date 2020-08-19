@@ -7,7 +7,7 @@ export const selectRouterReducerState = createFeatureSelector<MergedRouteReducer
 
 export const selectMergedRoute = createSelector(
   selectRouterReducerState,
-  (routerReducerState) => routerReducerState.state
+  (routerReducerState) => routerReducerState?.state
 );
 
 export const selectRouteData = createSelector(

@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState, selectUserInfo } from '../../../../store';
-import * as AuthActions from '../../../../store/auth/auth.actions';
 import * as ControlsActions from '../../../../store/controls/controls.actions';
 import * as DebtsActions from '../../../../store/debts/debts.actions';
 import { Icons, SubscriptionComponent } from '../../../models';
@@ -47,10 +46,6 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
   }
 
 
-  logout(): void {
-    this.store.dispatch(AuthActions.logout());
-  }
-
   back(): void {
     this.router.navigate(['../']);
   }
@@ -88,8 +83,8 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
         this.title = this.getDebtTitle();
       } else {
         this.currentDebt = null;
-        this.picture = user.picture;
-        this.title = user.name;
+        this.picture = user?.picture;
+        this.title = user?.name;
       }
     });
   }

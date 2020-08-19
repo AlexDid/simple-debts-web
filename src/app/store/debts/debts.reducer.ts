@@ -23,7 +23,8 @@ export const reducer = createReducer(
     isLoaded: true
   })),
   on(DebtsActions.loadDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
-  on(DebtsActions.deleteDebtSuccess, (state, {id}) => adapter.removeOne(id, state)),
+  on(DebtsActions.deleteDebt, (state, {debt}) => adapter.removeOne(debt.id, state)),
+  on(DebtsActions.deleteDebtError, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.createMultipleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),
   on(DebtsActions.createSingleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),
   on(DebtsActions.acceptMultipleDebtCreationSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),

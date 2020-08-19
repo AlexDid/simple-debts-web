@@ -1,0 +1,26 @@
+.button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  opacity: .3;
+  transition: .3s;
+  color: white;
+
+  ::ng-deep path {
+    fill: white;
+  }
+
+  .title {
+    opacity: 0;
+    transition: .3s;
+    margin-left: 10px;
+  }
+
+  &:hover {
+    opacity: 1;
+
+    .title {
+      opacity: 1;
+    }
+  }
+}

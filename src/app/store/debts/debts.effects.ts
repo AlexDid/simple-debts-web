@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, first, map, mergeMap, tap } from 'rxjs/operators';
 
 import * as DebtsActions from './debts.actions';
 import { DebtsService } from '../../debts/services/debts.service';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackbarHelper } from '../../core/helpers';
+import { DialogService } from '../../core/modules/dialog/services/dialog.service';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -31,7 +33,9 @@ export class DebtsEffects {
   constructor(
     private actions$: Actions,
     private debtsService: DebtsService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialogService: DialogService,
+    private router: Router
   ) {}
 
   @Effect()
@@ -53,11 +57,29 @@ export class DebtsEffects {
   );
 
   @Effect()
+  deleteDebtRequest$ = this.actions$.pipe(
+    ofType(DebtsActions.deleteDebtRequest),
+    mergeMap(({debt}) => this.dialogService.showDeleteDialog('Delete this debt?').pipe(
+      first(),
+      map(del => {
+        if (del) {
+          this.router.navigate(['/']);
+          return DebtsActions.deleteDebt({debt});
+        }
+        return DebtsActions.deleteDebtRequestRejected();
+      }),
+    ))
+  );
+
+  @Effect()
   deleteDebt$ = this.actions$.pipe(
     ofType(DebtsActions.deleteDebt),
-    mergeMap(({id}) => this.debtsService.deleteDebt(id).pipe(
-      map(() => DebtsActions.deleteDebtSuccess({id})),
-      catchError(err => of(DebtsActions.deleteDebtError(err)))
+    mergeMap(({debt}) => this.debtsService.deleteDebt(debt.id).pipe(
+      map(() => DebtsActions.deleteDebtSuccess()),
+      catchError(err => of(DebtsActions.deleteDebtError({
+        error: err,
+        debt
+      })))
     ))
   );
 

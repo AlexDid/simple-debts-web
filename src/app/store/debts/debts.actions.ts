@@ -27,17 +27,23 @@ export const loadDebtError = createAction(
   props<ErrorDto>()
 );
 
+export const deleteDebtRequest = createAction(
+  '[Debts] Delete Debt Request',
+  props<DebtDto>()
+);
+export const deleteDebtRequestRejected = createAction(
+  '[Debts] Delete Debt Request Rejected',
+);
 export const deleteDebt = createAction(
   '[Debts] Delete Debt',
-  props<IdDto>()
+  props<DebtDto>()
 );
 export const deleteDebtSuccess = createAction(
   '[Debts] Delete Debt Success',
-  props<IdDto>()
 );
 export const deleteDebtError = createAction(
   '[Debts] Delete Debt Error',
-  props<ErrorDto>()
+  props<ErrorDto & DebtDto>()
 );
 
 export const createMultipleDebt = createAction(
