@@ -50,6 +50,7 @@ export abstract class NestedFormComponent<T> extends SubscriptionComponent imple
   }
 
   private setupFormEmitter(): void {
+    this.emitFormValue(this.form.value);
     this.form
       .valueChanges
       .pipe(

@@ -9,7 +9,7 @@ import { AuthService } from '../services/auth.service';
 export class JwtInterceptor implements HttpInterceptor {
 
   intercept<T>(request: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
-    // add auth header with jwt if user is logged in and request is to the api url
+    // add auth header with jwt if selectedUser is logged in and request is to the api url
     const user = LocalStorageHelper.getLoggedUser();
     const isLoggedIn = user && user.token;
     const isApiUrl = request.url.startsWith(environment.API_URL);

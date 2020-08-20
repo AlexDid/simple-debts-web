@@ -1,0 +1,14 @@
+<div class="user-info">
+  <div class="picture">
+    <div *ngIf="isSingleUserDebt; else picture" class="emoji">🤖</div>
+    <ng-template #picture>
+      <img [src]="form.selectedUser.picture" alt="avatar">
+    </ng-template>
+  </div>
+  <p class="name">
+    {{ isSingleUserDebt ? form.userName : form.selectedUser.name }}
+  </p>
+</div>
+<p class="currency">
+  Currency: {{ form.currency }}
+</p>

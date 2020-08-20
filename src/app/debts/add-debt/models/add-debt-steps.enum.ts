@@ -1,0 +1,6 @@
+export enum AddDebtSteps {
+  SELECT_DEBT_TYPE,
+  SELECT_USER,
+  SELECT_CURRENCY,
+  CONFIRM
+}

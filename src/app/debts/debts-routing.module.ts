@@ -26,6 +26,7 @@ const routes: Routes = [
         component: AddDebtComponent,
         data: {
           back: true,
+          hideHeaderPicture: true
         } as AppWrapperConfig
       },
       {

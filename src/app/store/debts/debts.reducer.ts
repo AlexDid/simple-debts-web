@@ -9,10 +9,12 @@ export const adapter = createEntityAdapter<Debt>();
 
 export interface DebtsState extends EntityState<Debt> {
   isLoaded: boolean;
+  isSubmittingNewDebt: boolean;
 }
 
 export const initialState: DebtsState = adapter.getInitialState({
   isLoaded: false,
+  isSubmittingNewDebt: false,
 });
 
 export const reducer = createReducer(
@@ -22,11 +24,40 @@ export const reducer = createReducer(
     ...adapter.setAll(debts, state),
     isLoaded: true
   })),
+
+  on(DebtsActions.createSingleDebt, (state) => ({
+    ...state,
+    isSubmittingNewDebt: true
+  })),
+
+  on(DebtsActions.createMultipleDebt, (state) => ({
+    ...state,
+    isSubmittingNewDebt: true
+  })),
+
+  on(DebtsActions.createMultipleDebtSuccess, (state, {debt}) => ({
+    ...adapter.addOne(debt, state),
+    isSubmittingNewDebt: false
+  })),
+
+  on(DebtsActions.createSingleDebtSuccess, (state, {debt}) => ({
+    ...adapter.addOne(debt, state),
+    isSubmittingNewDebt: false
+  })),
+
+  on(DebtsActions.createMultipleDebtError, (state) => ({
+    ...state,
+    isSubmittingNewDebt: false
+  })),
+
+  on(DebtsActions.createSingleDebtError, (state) => ({
+    ...state,
+    isSubmittingNewDebt: false
+  })),
+
   on(DebtsActions.loadDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.deleteDebt, (state, {debt}) => adapter.removeOne(debt.id, state)),
   on(DebtsActions.deleteDebtError, (state, {debt}) => adapter.upsertOne(debt, state)),
-  on(DebtsActions.createMultipleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),
-  on(DebtsActions.createSingleDebtSuccess, (state, {debt}) => adapter.addOne(debt, state)),
   on(DebtsActions.acceptMultipleDebtCreationSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.declineMultipleDebtCreationSuccess, (state, {id}) => adapter.removeOne(id, state)),
   on(DebtsActions.acceptAllOperationsSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),

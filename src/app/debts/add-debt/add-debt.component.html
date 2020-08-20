@@ -1,1 +1,64 @@
-<p>add-debt works!</p>
+<app-spinner-container
+  *ngIf="showSpinner; else formBlock"
+></app-spinner-container>
+
+<ng-template #formBlock>
+  <div class="forms">
+    <app-debt-type-form
+      *ngIf="currentStep === AddDebtSteps.SELECT_DEBT_TYPE"
+      [formValue]="form"
+      (formChanges)="updateForm($event)"
+    ></app-debt-type-form>
+
+    <app-virtual-user-form
+      *ngIf="currentStep === AddDebtSteps.SELECT_USER && this.isSingleUserDebt"
+      [formValue]="form"
+      (formChanges)="updateForm($event)"
+    ></app-virtual-user-form>
+
+    <app-select-user-form
+      *ngIf="currentStep === AddDebtSteps.SELECT_USER && !this.isSingleUserDebt"
+      [formValue]="form"
+      (formChanges)="updateForm($event)"
+    ></app-select-user-form>
+
+    <app-currency-form
+      *ngIf="currentStep === AddDebtSteps.SELECT_CURRENCY"
+      [formValue]="form"
+      (formChanges)="updateForm($event)"
+    ></app-currency-form>
+
+    <app-confirm-screen
+      *ngIf="currentStep === AddDebtSteps.CONFIRM"
+      [form]="form"
+    ></app-confirm-screen>
+  </div>
+
+  <div class="navigation">
+    <button
+      [class.hidden]="!showPrevButton"
+      mat-button
+      mat-flat-button
+      (click)="goToPrevStep()"
+    >
+      Back
+    </button>
+    <button
+      *ngIf="showNextButton"
+      [disabled]="!enableNextButton"
+      mat-button
+      mat-flat-button
+      (click)="goToNextStep()"
+    >
+      Next
+    </button>
+    <button
+      *ngIf="showSubmitButton"
+      mat-button
+      mat-flat-button
+      (click)="submitForm()"
+    >
+      Create
+    </button>
+  </div>
+</ng-template>

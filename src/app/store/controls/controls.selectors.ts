@@ -7,3 +7,8 @@ export const selectRefreshControl = createSelector(
   selectControls,
   state => state.isRefreshing
 );
+
+export const selectHeaderTitle = createSelector(
+  selectControls,
+  state => state.headerText
+);

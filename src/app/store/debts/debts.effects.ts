@@ -87,7 +87,10 @@ export class DebtsEffects {
   createMultipleDebt$ = this.actions$.pipe(
     ofType(DebtsActions.createMultipleDebt),
     mergeMap(dto => this.debtsService.createMultipleDebt(dto).pipe(
-      map(debt => DebtsActions.createMultipleDebtSuccess({debt})),
+      map(debt => {
+        this.router.navigate([`/${debt.id}`]);
+        return DebtsActions.createMultipleDebtSuccess({debt});
+      }),
       catchError(err => of(DebtsActions.createMultipleDebtError(err)))
     ))
   );
@@ -96,7 +99,10 @@ export class DebtsEffects {
   createSingleDebt$ = this.actions$.pipe(
     ofType(DebtsActions.createSingleDebt),
     mergeMap(dto => this.debtsService.createSingleDebt(dto).pipe(
-      map(debt => DebtsActions.createSingleDebtSuccess({debt})),
+      map(debt => {
+        this.router.navigate([`/${debt.id}`]);
+        return DebtsActions.createSingleDebtSuccess({debt});
+      }),
       catchError(err => of(DebtsActions.createSingleDebtError(err)))
     ))
   );

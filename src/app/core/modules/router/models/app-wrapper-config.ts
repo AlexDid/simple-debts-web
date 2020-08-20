@@ -3,6 +3,7 @@ export interface AppWrapperConfig {
   refresh?: boolean;
   back?: boolean;
   header?: boolean;
+  hideHeaderPicture?: boolean;
   takeGive?: boolean;
   addDebt?: boolean;
   deleteDebt?: boolean;

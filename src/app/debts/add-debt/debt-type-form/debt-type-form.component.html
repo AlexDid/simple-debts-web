@@ -1,0 +1,17 @@
+<div
+  class="type"
+  [class.selected]="selectedType === DebtAccountType.SINGLE_USER"
+  (click)="selectType(DebtAccountType.SINGLE_USER)"
+>
+  <div class="emoji">🤖</div>
+  <p class="title">virtual user</p>
+</div>
+
+<div
+  class="type"
+  [class.selected]="selectedType === DebtAccountType.MULTIPLE_USERS"
+  (click)="selectType(DebtAccountType.MULTIPLE_USERS)"
+>
+  <div class="emoji">😏</div>
+  <p class="title">registered user</p>
+</div>

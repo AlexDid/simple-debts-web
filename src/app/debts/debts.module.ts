@@ -13,6 +13,17 @@ import { MatCardModule } from '@angular/material/card';
 import { ListModule } from '../shared/modules/list/list.module';
 import { MatIconModule } from '@angular/material/icon';
 import { AddDebtComponent } from './add-debt/add-debt.component';
+import { DebtTypeFormComponent } from './add-debt/debt-type-form/debt-type-form.component';
+import { VirtualUserFormComponent } from './add-debt/virtual-user-form/virtual-user-form.component';
+import { SelectUserFormComponent } from './add-debt/select-user-form/select-user-form.component';
+import { ConfirmScreenComponent } from './add-debt/confirm-screen/confirm-screen.component';
+import { CurrencyFormComponent } from './add-debt/currency-form/currency-form.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UserSearchModule } from '../shared/modules/user-search/user-search.module';
 
 
 @NgModule({
@@ -23,7 +34,12 @@ import { AddDebtComponent } from './add-debt/add-debt.component';
     DebtsComponent,
     OperationsListComponent,
     OperationListItemComponent,
-    AddDebtComponent
+    AddDebtComponent,
+    DebtTypeFormComponent,
+    VirtualUserFormComponent,
+    SelectUserFormComponent,
+    ConfirmScreenComponent,
+    CurrencyFormComponent
   ],
   providers: [
     DebtsService
@@ -33,7 +49,13 @@ import { AddDebtComponent } from './add-debt/add-debt.component';
     DebtsRoutingModule,
     ListModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    UserSearchModule
   ]
 })
 export class DebtsModule { }

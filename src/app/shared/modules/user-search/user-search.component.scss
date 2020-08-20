@@ -1,0 +1,35 @@
+:host {
+  display: block;
+  width: 260px;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  input {
+    text-align: center;
+    font-size: 32px;
+  }
+
+  .spinner {
+    position: absolute;
+    bottom: 12px;
+    right: -46px;
+  }
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 34px;
+    height: 34px;
+    border-radius: 100%;
+    margin-right: 10px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+}

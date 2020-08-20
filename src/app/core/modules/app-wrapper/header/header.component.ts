@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { selectSelectedDebt } from '../../../../store/debts/debts.selectors';
 import { Debt, MoneyStatus } from '../../../../store/debts/models';
-import { selectRefreshControl } from '../../../../store/controls/controls.selectors';
+import { selectHeaderTitle, selectRefreshControl } from '../../../../store/controls/controls.selectors';
 import { ActionDto } from '../../../../store/controls/models';
 
 @Component({
@@ -73,10 +73,11 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
   private getHeaderUser(): void {
     combineLatest([
       this.store.select(selectUserInfo),
-      this.store.select(selectSelectedDebt)
+      this.store.select(selectSelectedDebt),
+      this.store.select(selectHeaderTitle)
     ]).pipe(
       this.getTakeUntilPipe(),
-    ).subscribe(([user, debt]) => {
+    ).subscribe(([user, debt, title]) => {
       if (debt) {
         this.currentDebt = debt;
         this.picture = debt.user.picture;
@@ -85,6 +86,10 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
         this.currentDebt = null;
         this.picture = user?.picture;
         this.title = user?.name;
+      }
+
+      if (title) {
+        this.title = title;
       }
     });
   }

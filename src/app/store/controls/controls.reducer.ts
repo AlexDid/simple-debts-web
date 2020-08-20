@@ -1,14 +1,16 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ControlsActions from './controls.actions';
+import { HeaderTextDto } from './models';
 
 export const controlsFeatureKey = 'controls';
 
-export interface ControlsState {
+export interface ControlsState extends HeaderTextDto {
   isRefreshing: boolean;
 }
 
 export const initialState: ControlsState = {
-  isRefreshing: false
+  isRefreshing: false,
+  headerText: ''
 };
 
 export const reducer = createReducer(
@@ -22,6 +24,16 @@ export const reducer = createReducer(
   on(ControlsActions.refreshCompleted, state => ({
     ...state,
     isRefreshing: false
+  })),
+
+  on(ControlsActions.setHeaderText, (state, {headerText}) => ({
+    ...state,
+    headerText
+  })),
+
+  on(ControlsActions.resetHeaderText, state => ({
+    ...state,
+    headerText: ''
   })),
 );
 

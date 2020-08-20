@@ -1,0 +1,32 @@
+<mat-form-field [formGroup]="form">
+  <input
+    type="text"
+    matInput
+    formControlName="name"
+    required
+    [matAutocomplete]="auto"
+  >
+  <div
+    *ngIf="showSpinner"
+    class="spinner"
+  >
+    <mat-spinner
+      [diameter]="24"
+      [strokeWidth]="4"
+    ></mat-spinner>
+  </div>
+  <mat-autocomplete
+    #auto
+    (optionSelected)="selectUser($event.option.value)"
+  >
+    <mat-option
+      *ngFor="let user of users$ | async"
+      [value]="user"
+    >
+      <div class="user-item">
+        <img [src]="user.picture" alt="avatar">
+        <p>{{user.name}}</p>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

@@ -1,0 +1,29 @@
+@import "~src/styles/variables";
+
+:host {
+  display: block;
+  height: $listHeight;
+  padding: 0 40px;
+
+  .forms {
+    height: calc(100% - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navigation {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .hidden {
+      visibility: hidden;
+    }
+
+    button[disabled] {
+      background-color: transparent;
+    }
+  }
+}
