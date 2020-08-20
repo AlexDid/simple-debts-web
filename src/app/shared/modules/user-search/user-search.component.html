@@ -21,6 +21,7 @@
   >
     <mat-option
       *ngFor="let user of users$ | async"
+      class="user-option"
       [value]="user"
     >
       <div class="user-item">
