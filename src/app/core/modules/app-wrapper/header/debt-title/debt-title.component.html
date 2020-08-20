@@ -1,0 +1,13 @@
+<h1 class="title">
+  {{ debt.user.name }}
+  <span
+    *ngIf="summary"
+    class="summary"
+    [matTooltip]="summaryTooltip"
+    matTooltipPosition="above"
+    matTooltipClass="tooltip"
+    [ngClass]="summaryColor"
+  >
+    {{ summary }}
+  </span>
+</h1>

@@ -6,10 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderComponent } from './header/header.component';
 import { OutsideButtonComponent } from './outside-button/outside-button.component';
+import { DebtTitleComponent } from './header/debt-title/debt-title.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
-  declarations: [AppWrapperComponent, HeaderComponent, OutsideButtonComponent],
+  declarations: [AppWrapperComponent, HeaderComponent, OutsideButtonComponent, DebtTitleComponent],
   exports: [
     AppWrapperComponent
   ],
@@ -17,7 +19,8 @@ import { OutsideButtonComponent } from './outside-button/outside-button.componen
     CommonModule,
     MatCardModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ]
 })
 export class AppWrapperModule { }

@@ -17,9 +17,16 @@
     </button>
   </div>
 
-  <h1 class="title">
-    {{ title }}
-  </h1>
+  <ng-template #titleBlock>
+    <h1 class="title">
+      {{ title }}
+    </h1>
+  </ng-template>
+
+  <app-debt-title
+    *ngIf="currentDebt; else titleBlock"
+    [debt]="currentDebt"
+  ></app-debt-title>
 
   <div class="action">
     <button

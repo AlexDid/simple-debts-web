@@ -1,0 +1,28 @@
+@import "~src/styles/colors";
+
+:host {
+  height: 40px;
+
+  h1 {
+    font-size: 32px;
+    letter-spacing: 1.3px;
+    font-weight: 400;
+    text-align: center;
+    margin: 0;;
+  }
+
+  .summary {
+    position: absolute;
+    font-size: 20px;
+    margin-left: 10px;
+    cursor: help;
+
+    &.red {
+      color: $red;
+    }
+
+    &.green {
+      color: $green;
+    }
+  }
+}

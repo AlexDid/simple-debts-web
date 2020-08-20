@@ -8,7 +8,7 @@ import { AppWrapperConfig } from '../../router';
 import { Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { selectSelectedDebt } from '../../../../store/debts/debts.selectors';
-import { Debt, MoneyStatus } from '../../../../store/debts/models';
+import { Debt } from '../../../../store/debts/models';
 import { selectHeaderTitle, selectRefreshControl } from '../../../../store/controls/controls.selectors';
 import { ActionDto } from '../../../../store/controls/models';
 
@@ -24,13 +24,13 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
 
   picture: string;
   title: string;
+  currentDebt: Debt;
 
   isRefreshing = false;
 
   readonly backIcon = Icons.ARROW_BACK;
   readonly refreshIcon = Icons.REFRESH;
 
-  private currentDebt: Debt;
 
   constructor(
     private store: Store<AppState>,
@@ -81,7 +81,7 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
       if (debt) {
         this.currentDebt = debt;
         this.picture = debt.user.picture;
-        this.title = this.getDebtTitle();
+        this.title = null;
       } else {
         this.currentDebt = null;
         this.picture = user?.picture;
@@ -92,15 +92,6 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
         this.title = title;
       }
     });
-  }
-
-  private getDebtTitle(): string {
-    const debt = this.currentDebt;
-    switch (debt.moneyStatus) {
-      case MoneyStatus.NONE: return `${debt.user.name} owes you nothing`;
-      case MoneyStatus.GIVEN: return `You owe ${debt.user.name} ${debt.currency}${debt.summary}`;
-      case MoneyStatus.TAKEN: return `${debt.user.name} owes you ${debt.currency}${debt.summary}`;
-    }
   }
 
   private getRefreshingStatus(): void {
