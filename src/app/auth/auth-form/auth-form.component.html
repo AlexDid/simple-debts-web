@@ -1,5 +1,5 @@
 <div class="form" [formGroup]="form">
-  <mat-form-field>
+  <mat-form-field appearance="standard">
     <label>
       <input
         type="email"
@@ -10,7 +10,7 @@
     </label>
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="standard">
     <label>
       <input
         type="password"
@@ -22,7 +22,7 @@
     </label>
   </mat-form-field>
 
-  <mat-form-field *ngIf="passwordConfirmation">
+  <mat-form-field appearance="standard" *ngIf="passwordConfirmation">
     <label>
       <input
         type="password"

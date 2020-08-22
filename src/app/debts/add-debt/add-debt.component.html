@@ -38,7 +38,6 @@
     <button
       [class.hidden]="!showPrevButton"
       mat-button
-      mat-flat-button
       (click)="goToPrevStep()"
     >
       Back
@@ -47,7 +46,6 @@
       *ngIf="showNextButton"
       [disabled]="!enableNextButton"
       mat-button
-      mat-flat-button
       (click)="goToNextStep()"
     >
       Next
@@ -55,7 +53,6 @@
     <button
       *ngIf="showSubmitButton"
       mat-button
-      mat-flat-button
       (click)="submitForm()"
     >
       Create
