@@ -3,5 +3,6 @@ export enum Icons {
   REFRESH = 'refresh',
   LOGOUT = 'logout',
   PLUS = 'plus',
-  CROSS = 'cross'
+  CROSS = 'cross',
+  EYE = 'eye',
 }

@@ -17,3 +17,7 @@ export const setHeaderText = createAction(
 export const resetHeaderText = createAction(
   '[Controls] Reset Header Text'
 );
+
+export const toggleShowCanceledOperations = createAction(
+  '[Controls] Toggle Show Canceled Operations'
+);

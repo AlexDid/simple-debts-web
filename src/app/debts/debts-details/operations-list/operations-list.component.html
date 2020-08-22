@@ -7,14 +7,15 @@
     *ngIf="operations?.length === 0; else list"
     emoji="🤔"
     header="Hmmm.... <br> looks like there are no operations yet"
-    subtitle="press one of the buttons below to add one"
+    subtitle="press ➕ button on the right to start"
   ></app-empty-list>
 
   <ng-template #list>
     <app-operation-list-item
-      *ngFor="let operation of operations; let i = index"
+      *ngFor="let operation of operations$ | async; let i = index"
       [operation]="operation"
       [userId]="userId"
+      [debtId]="debtId"
     ></app-operation-list-item>
   </ng-template>
 </app-list>

@@ -12,3 +12,8 @@ export const selectHeaderTitle = createSelector(
   selectControls,
   state => state.headerText
 );
+
+export const selectShowCanceledOperations = createSelector(
+  selectControls,
+  state => state.showAllOperations
+);

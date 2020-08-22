@@ -16,6 +16,10 @@
     margin-left: 10px;
   }
 
+  &.selected {
+    opacity: 1;
+  }
+
   &:hover {
     opacity: 1;
 

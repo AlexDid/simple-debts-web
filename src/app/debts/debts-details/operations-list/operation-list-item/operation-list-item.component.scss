@@ -1,5 +1,15 @@
 @import "~src/styles/colors";
 
+app-list-item {
+
+  &.unaccepted {
+
+    ::ng-deep .user-image {
+      filter: grayscale(100%);
+    }
+  }
+}
+
 mat-icon {
   width: 34px;
   height: 34px;

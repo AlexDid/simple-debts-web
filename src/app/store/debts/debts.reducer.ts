@@ -10,11 +10,17 @@ export const adapter = createEntityAdapter<Debt>();
 export interface DebtsState extends EntityState<Debt> {
   isLoaded: boolean;
   isSubmittingNewDebt: boolean;
+  creatingOperation: boolean;
+  deletingOperation: string;
+  acceptingOperation: string;
 }
 
 export const initialState: DebtsState = adapter.getInitialState({
   isLoaded: false,
   isSubmittingNewDebt: false,
+  creatingOperation: false,
+  deletingOperation: null,
+  acceptingOperation: null
 });
 
 export const reducer = createReducer(
@@ -22,7 +28,7 @@ export const reducer = createReducer(
 
   on(DebtsActions.loadDebtsSuccess, (state, {debts}) => ({
     ...adapter.setAll(debts, state),
-    isLoaded: true
+    isLoaded: true,
   })),
 
   on(DebtsActions.createSingleDebt, (state) => ({
@@ -55,7 +61,72 @@ export const reducer = createReducer(
     isSubmittingNewDebt: false
   })),
 
+  on(DebtsActions.addOperation, state => ({
+    ...state,
+    creatingOperation: true
+  })),
+
+  on(DebtsActions.addOperationSuccess, (state, {debt}) => ({
+    ...state,
+    ...adapter.upsertOne(debt, state),
+    creatingOperation: false
+  })),
+
+  on(DebtsActions.addOperationError, (state) => ({
+    ...state,
+    creatingOperation: false
+  })),
+
+  on(DebtsActions.deleteOperation, (state, {id}) => ({
+    ...state,
+    deletingOperation: id
+  })),
+
+  on(DebtsActions.deleteOperationSuccess, (state, {debt}) => ({
+    ...state,
+    ...adapter.upsertOne(debt, state),
+    deletingOperation: null
+  })),
+
+  on(DebtsActions.deleteOperationError, (state) => ({
+    ...state,
+    deletingOperation: null
+  })),
+
+  on(DebtsActions.acceptOperation, (state, {id}) => ({
+    ...state,
+    acceptingOperation: id
+  })),
+
+  on(DebtsActions.acceptOperationSuccess, (state, {debt}) => ({
+    ...state,
+    ...adapter.upsertOne(debt, state),
+    acceptingOperation: null
+  })),
+
+  on(DebtsActions.acceptOperationError, (state) => ({
+    ...state,
+    acceptingOperation: null
+  })),
+
+  on(DebtsActions.declineOperation, (state, {id}) => ({
+    ...state,
+    acceptingOperation: id
+  })),
+
+  on(DebtsActions.declineOperationSuccess, (state, {debt}) => ({
+    ...state,
+    ...adapter.upsertOne(debt, state),
+    acceptingOperation: null
+  })),
+
+  on(DebtsActions.declineOperationError, (state) => ({
+    ...state,
+    acceptingOperation: null
+  })),
+
   on(DebtsActions.loadDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
+
   on(DebtsActions.deleteDebt, (state, {debt}) => adapter.removeOne(debt.id, state)),
   on(DebtsActions.deleteDebtError, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.acceptMultipleDebtCreationSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),

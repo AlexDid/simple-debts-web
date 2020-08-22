@@ -2,7 +2,9 @@
   [pictureBorder]="false"
   [title]="operation.moneyAmount.toString()"
   [subtitle]="operation.description"
-  [message]="message"
+  [messages]="messages"
+  [showSpinner]="showSpinner"
+  [class.unaccepted]="isUnaccepted"
 >
   <mat-icon
     picture

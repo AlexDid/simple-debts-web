@@ -3,6 +3,7 @@ import { LocalStorageHelper } from './local-storage.helper';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
+// TODO: remove
 export function appInitializer(authService: AuthService): () => Promise<void> {
   const refreshToken = LocalStorageHelper.getLoggedUser()?.refreshToken;
 

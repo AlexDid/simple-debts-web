@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
-import { catchError, first, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, first, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 
 import * as DebtsActions from './debts.actions';
-import { DebtsService } from '../../debts/services/debts.service';
+import { DebtsService } from '../../core/services/debts.service';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorSnackbarHelper } from '../../core/helpers';
 import { DialogService } from '../../core/modules/dialog/services/dialog.service';
 import { Router } from '@angular/router';
+import { OperationsService } from '../../core/services/operations.service';
 
 
 @Injectable()
@@ -28,6 +29,10 @@ export class DebtsEffects {
     DebtsActions.connectUserToDebtError,
     DebtsActions.connectUserToDebtAcceptError,
     DebtsActions.connectUserToDebtDeclineError,
+    DebtsActions.addOperationError,
+    DebtsActions.deleteOperationError,
+    DebtsActions.acceptOperationError,
+    DebtsActions.declineOperationError,
   ];
 
   constructor(
@@ -35,7 +40,8 @@ export class DebtsEffects {
     private debtsService: DebtsService,
     private snackbar: MatSnackBar,
     private dialogService: DialogService,
-    private router: Router
+    private router: Router,
+    private operationsService: OperationsService
   ) {}
 
   @Effect()
@@ -167,6 +173,61 @@ export class DebtsEffects {
     mergeMap(({id}) => this.debtsService.declineUserConnecting(id).pipe(
       map(() => DebtsActions.connectUserToDebtDeclineSuccess({id})),
       catchError(err => of(DebtsActions.connectUserToDebtDeclineError(err)))
+    ))
+  );
+
+  @Effect()
+  createOperation$ = this.actions$.pipe(
+    ofType(DebtsActions.addOperation),
+    mergeMap(addOperationData => this.operationsService.createOperation(addOperationData).pipe(
+      switchMap(() => this.debtsService.getDebt(addOperationData.debtsId)),
+      tap(debt => this.router.navigate([`/${debt.id}`])),
+      map(debt => DebtsActions.addOperationSuccess({ debt })),
+      catchError(err => of(DebtsActions.addOperationError(err)))
+    ))
+  );
+
+  @Effect()
+  deleteOperationRequest$ = this.actions$.pipe(
+    ofType(DebtsActions.deleteOperationRequest),
+    mergeMap(dto => this.dialogService.showDeleteDialog('Delete this operation?').pipe(
+      first(),
+      map(del => {
+        if (del) {
+          return DebtsActions.deleteOperation(dto);
+        }
+        return DebtsActions.deleteOperationRequestRejected();
+      }),
+    ))
+  );
+
+  @Effect()
+  deleteOperation$ = this.actions$.pipe(
+    ofType(DebtsActions.deleteOperation),
+    mergeMap(({id, debtsId}) => this.operationsService.deleteOperation(id).pipe(
+      switchMap(() => this.debtsService.getDebt(debtsId)),
+      map(debt => DebtsActions.deleteOperationSuccess({ debt })),
+      catchError(error => of(DebtsActions.deleteOperationError({ error })))
+    ))
+  );
+
+  @Effect()
+  acceptOperation$ = this.actions$.pipe(
+    ofType(DebtsActions.acceptOperation),
+    mergeMap(({id, debtsId}) => this.operationsService.acceptOperation(id).pipe(
+      switchMap(() => this.debtsService.getDebt(debtsId)),
+      map(debt => DebtsActions.acceptOperationSuccess({ debt })),
+      catchError(error => of(DebtsActions.acceptOperationError({ error })))
+    ))
+  );
+
+  @Effect()
+  declineOperation$ = this.actions$.pipe(
+    ofType(DebtsActions.declineOperation),
+    mergeMap(({id, debtsId}) => this.operationsService.declineOperation(id).pipe(
+      switchMap(() => this.debtsService.getDebt(debtsId)),
+      map(debt => DebtsActions.declineOperationSuccess({ debt })),
+      catchError(error => of(DebtsActions.declineOperationError({ error })))
     ))
   );
 

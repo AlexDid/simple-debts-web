@@ -11,6 +11,8 @@ import { OutsideButton } from './models';
 import { Router } from '@angular/router';
 import { selectSelectedDebt } from '../../../store/debts/debts.selectors';
 import { Debt } from '../../../store/debts/models';
+import { toggleShowCanceledOperations } from '../../../store/controls/controls.actions';
+import { selectShowCanceledOperations } from '../../../store/controls/controls.selectors';
 
 @Component({
   selector: 'app-app-wrapper',
@@ -20,6 +22,8 @@ import { Debt } from '../../../store/debts/models';
 export class AppWrapperComponent extends SubscriptionComponent implements OnInit {
 
   config: AppWrapperConfig = {};
+
+  showAllOperations = true;
 
   readonly buttons = outsideButtonsMap;
 
@@ -35,6 +39,7 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
   ngOnInit(): void {
     this.getRouteData();
     this.getSelectedDebt();
+    this.getShowSelectedOperations();
   }
 
   getButton(name: keyof AppWrapperConfig): OutsideButton {
@@ -51,8 +56,16 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
     this.router.navigate(['add-debt']);
   }
 
+  addOperation(): void {
+    this.router.navigate([`${this.selectedDebt.id}/add-operation`]);
+  }
+
   deleteDebt(): void {
     this.store.dispatch(DebtsActions.deleteDebtRequest({debt: this.selectedDebt}));
+  }
+
+  toggleShowCanceledOperations(): void {
+    this.store.dispatch(toggleShowCanceledOperations());
   }
 
   private getRouteData(): void {
@@ -65,5 +78,11 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
     this.store.select(selectSelectedDebt).pipe(
       this.getTakeUntilPipe()
     ).subscribe(debt => this.selectedDebt = debt);
+  }
+
+  private getShowSelectedOperations(): void {
+    this.store.select(selectShowCanceledOperations).pipe(
+      this.getTakeUntilPipe()
+    ).subscribe(show => this.showAllOperations = show);
   }
 }

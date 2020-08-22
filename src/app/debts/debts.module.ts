@@ -6,7 +6,7 @@ import { DebtsListComponent } from './debts-list/debts-list.component';
 import { DebtsListItemComponent } from './debts-list/debts-list-item/debts-list-item.component';
 import { DebtsDetailsComponent } from './debts-details/debts-details.component';
 import { DebtsComponent } from './debts.component';
-import { DebtsService } from './services/debts.service';
+import { DebtsService } from '../core/services/debts.service';
 import { OperationsListComponent } from './debts-details/operations-list/operations-list.component';
 import { OperationListItemComponent } from './debts-details/operations-list/operation-list-item/operation-list-item.component';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +24,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UserSearchModule } from '../shared/modules/user-search/user-search.module';
+import { AddOperationComponent } from './debts-details/add-operation/add-operation.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { UserSearchModule } from '../shared/modules/user-search/user-search.modu
     VirtualUserFormComponent,
     SelectUserFormComponent,
     ConfirmScreenComponent,
-    CurrencyFormComponent
+    CurrencyFormComponent,
+    AddOperationComponent
   ],
   providers: [
     DebtsService

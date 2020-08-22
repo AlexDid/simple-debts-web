@@ -69,12 +69,34 @@
     }
   }
 
-  .message {
+  mat-spinner {
     margin-left: auto;
-    color: $accent;
+  }
 
-    &.red {
-      color: $red;
+  .messages {
+    margin-left: auto;
+    display: flex;
+
+    .message + .message {
+      margin-left: 40px;
     }
+
+    .message {
+      color: $accent;
+
+      &.red {
+        color: $red;
+      }
+
+      &.with-action {
+        cursor: pointer;
+        opacity: .4;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
   }
 }

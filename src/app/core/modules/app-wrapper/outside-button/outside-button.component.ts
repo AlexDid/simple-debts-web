@@ -11,4 +11,7 @@ export class OutsideButtonComponent {
   @Input()
   button: OutsideButton;
 
+  @Input()
+  selected = false;
+
 }

@@ -4,13 +4,14 @@ import { AppState, selectUserInfo } from '../../../../store';
 import * as ControlsActions from '../../../../store/controls/controls.actions';
 import * as DebtsActions from '../../../../store/debts/debts.actions';
 import { Icons, SubscriptionComponent } from '../../../models';
-import { AppWrapperConfig } from '../../router';
+import { AppWrapperConfig, RouterState } from '../../router';
 import { Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { selectSelectedDebt } from '../../../../store/debts/debts.selectors';
 import { Debt } from '../../../../store/debts/models';
 import { selectHeaderTitle, selectRefreshControl } from '../../../../store/controls/controls.selectors';
 import { ActionDto } from '../../../../store/controls/models';
+import { selectMergedRoute } from '../../../../store/router/router.selectors';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,8 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
   picture: string;
   title: string;
   currentDebt: Debt;
+
+  currentRoute: RouterState;
 
   isRefreshing = false;
 
@@ -43,11 +46,14 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
   ngOnInit(): void {
     this.getHeaderUser();
     this.getRefreshingStatus();
+    this.getCurrentUrl();
   }
 
 
   back(): void {
-    this.router.navigate(['../']);
+    const url = this.currentRoute.url.split('/');
+    url.pop();
+    this.router.navigate([url.join('/')]);
   }
 
   refresh(): void {
@@ -98,6 +104,12 @@ export class HeaderComponent extends SubscriptionComponent implements OnInit {
     this.store.select(selectRefreshControl).pipe(
       this.getTakeUntilPipe()
     ).subscribe(isRefreshing => this.isRefreshing = isRefreshing);
+  }
+
+  private getCurrentUrl(): void {
+    this.store.select(selectMergedRoute).pipe(
+      this.getTakeUntilPipe()
+    ).subscribe(route => this.currentRoute = route);
   }
 
 }

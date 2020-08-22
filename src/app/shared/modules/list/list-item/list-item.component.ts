@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MoneyStatusColor } from '../../../../debts/models';
 import { ListItemMessage } from './models';
+import { Action, Store } from '@ngrx/store';
+import { AppState } from '../../../../store';
 
 @Component({
   selector: 'app-list-item',
@@ -22,6 +24,21 @@ export class ListItemComponent {
   subtitleColor: MoneyStatusColor = MoneyStatusColor.BLACK;
 
   @Input()
-  message: ListItemMessage;
+  messages: ListItemMessage[] = [];
+
+  @Input()
+  showSpinner = false;
+
+  constructor(
+    private store: Store<AppState>
+  ) {}
+
+  dispatchMessageAction(event: MouseEvent, action: Action): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (action) {
+      this.store.dispatch(action);
+    }
+  }
 
 }

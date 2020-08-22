@@ -49,3 +49,13 @@ export const selectSelectedDebt = createSelector(
   selectMergedRoute,
   (debts, router) => router?.params ? plainToClass(Debt, debts[router.params[debtIdRouteParam]]) as Debt : null
 );
+
+export const selectCreateOperationStatus = createSelector(
+  selectDebtsState,
+  state => state.creatingOperation
+);
+
+export const selectOperationAcceptStatus = createSelector(
+  selectDebtsState,
+  state => state.acceptingOperation
+);

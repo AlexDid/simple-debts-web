@@ -1,0 +1,57 @@
+<app-spinner-container
+  *ngIf="showSpinner; else formBlock"
+></app-spinner-container>
+
+<ng-template #formBlock>
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+
+    <div class="money-receiver">
+      <div
+        class="item red"
+        [ngClass]="{ 'selected': selectedMoneyReceiver === currentUserId}"
+        (click)="selectMoneyReceiver(currentUserId)"
+      >
+        TAKE
+      </div>
+
+      <div
+        class="item green"
+        [ngClass]="{ 'selected': selectedMoneyReceiver === debtUserId}"
+        (click)="selectMoneyReceiver(debtUserId)"
+      >
+        GIVE
+      </div>
+    </div>
+
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        formControlName="moneyAmount"
+        min="0"
+        required
+        [placeholder]="'Amount (' + debtCurrency + ')'"
+      >
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        formControlName="description"
+        minlength="3"
+        required
+        placeholder="Description"
+      >
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      [disabled]="!form.valid"
+      (click)="submitForm()"
+    >
+      Add
+    </button>
+
+  </form>
+</ng-template>

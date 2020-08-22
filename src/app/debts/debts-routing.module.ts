@@ -6,6 +6,7 @@ import { DebtsDetailsComponent } from './debts-details/debts-details.component';
 import { debtIdRouteParam } from '../store/debts/debts.selectors';
 import { AppWrapperConfig } from '../core/modules/router';
 import { AddDebtComponent } from './add-debt/add-debt.component';
+import { AddOperationComponent } from './debts-details/add-operation/add-operation.component';
 
 const routes: Routes = [
   {
@@ -31,13 +32,28 @@ const routes: Routes = [
       },
       {
         path: `:${debtIdRouteParam}`,
-        component: DebtsDetailsComponent,
-        data: {
-          back: true,
-          refresh: true,
-          deleteDebt: true,
-          connectUser: true
-        } as AppWrapperConfig
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            component: DebtsDetailsComponent,
+            data: {
+              back: true,
+              refresh: true,
+              deleteDebt: true,
+              addOperation: true,
+              connectUser: true,
+              showAllOperations: true,
+            } as AppWrapperConfig
+          },
+          {
+            path: `add-operation`,
+            component: AddOperationComponent,
+            data: {
+              back: true,
+            } as AppWrapperConfig
+          }
+        ],
       },
     ],
     data: {

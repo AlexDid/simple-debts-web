@@ -1,5 +1,13 @@
 import { createAction, props } from '@ngrx/store';
-import { ConnectUserToDebtDto, CreateMultipleDebtDto, CreateSingleDebtDto, DebtDto, DebtListResponseDto } from './models';
+import {
+  ConnectUserToDebtDto,
+  CreateMultipleDebtDto,
+  CreateOperationDto,
+  CreateSingleDebtDto,
+  DebtDto,
+  DebtListResponseDto,
+  OperationActionDto
+} from './models';
 import { ErrorDto, IdDto } from '../../core/models';
 
 export const loadDebts = createAction(
@@ -160,5 +168,64 @@ export const connectUserToDebtDeclineSuccess = createAction(
 );
 export const connectUserToDebtDeclineError = createAction(
   '[Debts] Connect User To Debt Decline Error',
+  props<ErrorDto>()
+);
+
+export const addOperation = createAction(
+  '[Debts] Create Operation',
+  props<CreateOperationDto>()
+);
+export const addOperationSuccess = createAction(
+  '[Debts] Create Operation Success',
+  props<DebtDto>()
+);
+export const addOperationError = createAction(
+  '[Debts] Create Operation Error',
+  props<ErrorDto>()
+);
+
+export const deleteOperationRequest = createAction(
+  '[Debts] Delete Operation Request',
+  props<OperationActionDto>()
+);
+export const deleteOperationRequestRejected = createAction(
+  '[Debts] Delete Operation Request Rejected',
+);
+export const deleteOperation = createAction(
+  '[Debts] Delete Operation',
+  props<OperationActionDto>()
+);
+export const deleteOperationSuccess = createAction(
+  '[Debts] Delete Operation Success',
+  props<DebtDto>()
+);
+export const deleteOperationError = createAction(
+  '[Debts] Delete Operation Error',
+  props<ErrorDto>()
+);
+
+export const acceptOperation = createAction(
+  '[Debts] Accept Operation',
+  props<OperationActionDto>()
+);
+export const acceptOperationSuccess = createAction(
+  '[Debts] Accept Operation Success',
+  props<DebtDto>()
+);
+export const acceptOperationError = createAction(
+  '[Debts] Accept Operation Error',
+  props<ErrorDto>()
+);
+
+export const declineOperation = createAction(
+  '[Debts] Decline Operation',
+  props<OperationActionDto>()
+);
+export const declineOperationSuccess = createAction(
+  '[Debts] Decline Operation Success',
+  props<DebtDto>()
+);
+export const declineOperationError = createAction(
+  '[Debts] Decline Operation Error',
   props<ErrorDto>()
 );

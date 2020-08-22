@@ -6,17 +6,36 @@
   <ng-content></ng-content>
   <div class="outside-controls">
     <app-outside-button
+      *ngIf="getButton('addOperation')"
+      [button]="getButton('addOperation')"
+      (click)="addOperation()"
+    ></app-outside-button>
+
+    <app-outside-button
+      *ngIf="getButton('addDebt')"
       [button]="getButton('addDebt')"
       (click)="addDebt()"
     ></app-outside-button>
+
     <app-outside-button
-      [button]="getButton('deleteDebt')"
-      (click)="deleteDebt()"
+      *ngIf="getButton('showAllOperations')"
+      [button]="getButton('showAllOperations')"
+      [selected]="!showAllOperations"
+      (click)="toggleShowCanceledOperations()"
     ></app-outside-button>
-    <app-outside-button
-      class="logout"
-      [button]="getButton('logout')"
-      (click)="logout()"
-    ></app-outside-button>
+
+    <div class="bottom-buttons">
+      <app-outside-button
+        *ngIf="getButton('deleteDebt')"
+        [button]="getButton('deleteDebt')"
+        (click)="deleteDebt()"
+      ></app-outside-button>
+
+      <app-outside-button
+        *ngIf="getButton('logout')"
+        [button]="getButton('logout')"
+        (click)="logout()"
+      ></app-outside-button>
+    </div>
   </div>
 </mat-card>

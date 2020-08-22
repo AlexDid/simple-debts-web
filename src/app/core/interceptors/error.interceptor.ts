@@ -5,6 +5,7 @@ import { LocalStorageHelper } from '../helpers';
 import { Observable, throwError } from 'rxjs';
 import { catchError, first, switchMap } from 'rxjs/operators';
 
+// TODO: fix double refresh request which leads to logout
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 

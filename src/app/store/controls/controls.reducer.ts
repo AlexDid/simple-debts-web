@@ -6,11 +6,13 @@ export const controlsFeatureKey = 'controls';
 
 export interface ControlsState extends HeaderTextDto {
   isRefreshing: boolean;
+  showAllOperations: boolean;
 }
 
 export const initialState: ControlsState = {
   isRefreshing: false,
-  headerText: ''
+  headerText: '',
+  showAllOperations: true
 };
 
 export const reducer = createReducer(
@@ -34,6 +36,11 @@ export const reducer = createReducer(
   on(ControlsActions.resetHeaderText, state => ({
     ...state,
     headerText: ''
+  })),
+
+  on(ControlsActions.toggleShowCanceledOperations, state => ({
+    ...state,
+    showAllOperations: !state.showAllOperations
   })),
 );
 

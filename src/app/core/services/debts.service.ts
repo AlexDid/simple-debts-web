@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiServiceAbstract } from '../../core/models';
+import { ApiServiceAbstract } from '../models';
 import { CreateMultipleDebtDto, CreateSingleDebtDto, Debt, DebtListResponseDto } from '../../store/debts/models';
 import { HttpClient } from '@angular/common/http';
 

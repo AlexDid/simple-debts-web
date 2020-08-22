@@ -5,6 +5,21 @@
   <h3>{{ title }}</h3>
   <p [ngClass]="subtitleColor">{{ subtitle }}</p>
 </div>
-<div *ngIf="message" class="message" [ngClass]="message.color">
-  {{ message.text }}
-</div>
+<ng-template #messagesBlock>
+  <div class="messages">
+    <div
+      *ngFor="let message of messages"
+      class="message"
+      [ngClass]="message.color"
+      [class.with-action]="message.action"
+      (click)="dispatchMessageAction($event, message.action)"
+    >
+      {{ message.text }}
+    </div>
+  </div>
+</ng-template>
+<mat-spinner
+  *ngIf="showSpinner; else messagesBlock"
+  [diameter]="30"
+  [strokeWidth]="5"
+></mat-spinner>

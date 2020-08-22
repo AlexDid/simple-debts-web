@@ -20,25 +20,25 @@ export class DebtsListItemComponent {
     return this.moneyStatusColorsMap.get(this.debt.moneyStatus);
   }
 
-  get message(): ListItemMessage {
+  get message(): ListItemMessage[] {
     switch (this.debt.status) {
       case DebtStatus.CREATION_AWAITING || DebtStatus.CONNECT_USER:
-        return {
+        return [{
           text: this.debt.isUserStatusAcceptor ? 'NEW' : 'WAITING',
           color: ListItemMessageColor.ACCENT
-        };
+        }];
       case DebtStatus.USER_DELETED:
-        return {
+        return [{
           text: 'USER LEFT',
           color: ListItemMessageColor.RED
-        };
+        }];
       case DebtStatus.CHANGE_AWAITING:
-        return this.debt.isUserStatusAcceptor ? {
+        return this.debt.isUserStatusAcceptor ? [{
           text: 'NEW OPERATIONS',
           color: ListItemMessageColor.ACCENT
-        } : null;
+        }] : [];
       default:
-        return null;
+        return [];
     }
   }
 

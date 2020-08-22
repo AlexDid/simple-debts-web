@@ -1,6 +1,6 @@
-import {RouterStateSerializer} from '@ngrx/router-store';
-import {ActivatedRouteSnapshot, Data, Params, RouterStateSnapshot} from '@angular/router';
-import {RouterState} from './router-state';
+import { RouterStateSerializer } from '@ngrx/router-store';
+import { ActivatedRouteSnapshot, Data, Params, RouterStateSnapshot } from '@angular/router';
+import { RouterState } from './router-state';
 
 
 export class MergedRouterStateSerializer implements RouterStateSerializer<RouterState> {
@@ -9,7 +9,7 @@ export class MergedRouterStateSerializer implements RouterStateSerializer<Router
       url: routerState.url,
       params: this.mergeRouteParams(routerState.root, r => r.params),
       queryParams: this.mergeRouteParams(routerState.root, r => r.queryParams),
-      data: this.mergeRouteData(routerState.root)
+      data: this.mergeRouteData(routerState.root),
     };
   }
 

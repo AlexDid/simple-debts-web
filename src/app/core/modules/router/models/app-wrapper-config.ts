@@ -6,6 +6,8 @@ export interface AppWrapperConfig {
   hideHeaderPicture?: boolean;
   takeGive?: boolean;
   addDebt?: boolean;
+  addOperation?: boolean;
+  showAllOperations?: boolean;
   deleteDebt?: boolean;
   connectUser?: boolean;
 }
