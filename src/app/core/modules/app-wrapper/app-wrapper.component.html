@@ -27,6 +27,7 @@
     <div class="bottom-buttons">
       <app-outside-button
         *ngIf="getButton('deleteDebt')"
+        class="delete-debt"
         [button]="getButton('deleteDebt')"
         (click)="deleteDebt()"
       ></app-outside-button>

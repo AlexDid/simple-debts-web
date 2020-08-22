@@ -34,6 +34,14 @@
       flex-direction: column;
     }
 
+    .delete-debt {
+
+      ::ng-deep mat-icon {
+        width: 21px;
+        margin-right: 3px;
+      }
+    }
+
     app-outside-button + app-outside-button {
       margin-top: 30px;
     }

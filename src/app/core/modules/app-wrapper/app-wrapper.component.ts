@@ -10,9 +10,10 @@ import { outsideButtonsMap } from './data';
 import { OutsideButton } from './models';
 import { Router } from '@angular/router';
 import { selectSelectedDebt } from '../../../store/debts/debts.selectors';
-import { Debt } from '../../../store/debts/models';
+import { Debt, OperationStatus } from '../../../store/debts/models';
 import { toggleShowCanceledOperations } from '../../../store/controls/controls.actions';
 import { selectShowCanceledOperations } from '../../../store/controls/controls.selectors';
+import { combineLatest, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-app-wrapper',
@@ -37,8 +38,7 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
   }
 
   ngOnInit(): void {
-    this.getRouteData();
-    this.getSelectedDebt();
+    this.getDebtAndConfig();
     this.getShowSelectedOperations();
   }
 
@@ -68,16 +68,34 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
     this.store.dispatch(toggleShowCanceledOperations());
   }
 
-  private getRouteData(): void {
-    this.store.select(selectRouteData).pipe(
+  private getDebtAndConfig(): void {
+    combineLatest([
+      this.getSelectedDebt(),
+      this.getRouteData()
+    ]).pipe(
       this.getTakeUntilPipe()
-    ).subscribe(data => this.config = data || {});
+    ).subscribe(([debt, config]) => {
+      this.selectedDebt = debt;
+      this.config = {
+        ...config,
+        showAllOperations: false
+      } || {};
+
+      if (debt?.moneyOperations?.some(op => op.status !== OperationStatus.UNCHANGED) && config.showAllOperations) {
+        this.config = {
+          ...config,
+          showAllOperations: true
+        };
+      }
+    });
   }
 
-  private getSelectedDebt(): void {
-    this.store.select(selectSelectedDebt).pipe(
-      this.getTakeUntilPipe()
-    ).subscribe(debt => this.selectedDebt = debt);
+  private getRouteData(): Observable<AppWrapperConfig> {
+    return this.store.select(selectRouteData);
+  }
+
+  private getSelectedDebt(): Observable<Debt> {
+    return this.store.select(selectSelectedDebt);
   }
 
   private getShowSelectedOperations(): void {
