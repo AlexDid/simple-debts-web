@@ -1,0 +1,19 @@
+@import "~src/styles/colors";
+
+:host {
+  display: flex;
+  align-items: baseline;
+
+  .key {
+    color: $gray;
+    font-size: 14px;
+    width: 90px;
+    margin: 14px 0;
+  }
+
+  .value {
+    color: black;
+    font-size: 22px;
+    margin: 14px 0;
+  }
+}

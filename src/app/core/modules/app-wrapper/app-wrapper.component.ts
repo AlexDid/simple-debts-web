@@ -9,8 +9,8 @@ import * as DebtsActions from '../../../store/debts/debts.actions';
 import { outsideButtonsMap } from './data';
 import { OutsideButton } from './models';
 import { Router } from '@angular/router';
-import { selectSelectedDebt } from '../../../store/debts/debts.selectors';
-import { Debt, OperationStatus } from '../../../store/debts/models';
+import { selectSelectedDebt, selectSelectedOperation } from '../../../store/debts/debts.selectors';
+import { Debt, DebtAccountType, Operation, OperationStatus } from '../../../store/debts/models';
 import { toggleShowCanceledOperations } from '../../../store/controls/controls.actions';
 import { selectShowCanceledOperations } from '../../../store/controls/controls.selectors';
 import { combineLatest, Observable } from 'rxjs';
@@ -30,6 +30,8 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
 
   private selectedDebt: Debt;
 
+  private selectedOperation: Operation;
+
   constructor(
     private store: Store<AppState>,
     private router: Router
@@ -40,6 +42,7 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
   ngOnInit(): void {
     this.getDebtAndConfig();
     this.getShowSelectedOperations();
+    this.getSelectedOperation();
   }
 
   getButton(name: keyof AppWrapperConfig): OutsideButton {
@@ -64,6 +67,10 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
     this.store.dispatch(DebtsActions.deleteDebtRequest({debt: this.selectedDebt}));
   }
 
+  deleteOperation(): void {
+    this.store.dispatch(DebtsActions.deleteOperationRequest({ debtsId: this.selectedDebt.id, id: this.selectedOperation.id }));
+  }
+
   toggleShowCanceledOperations(): void {
     this.store.dispatch(toggleShowCanceledOperations());
   }
@@ -71,20 +78,30 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
   private getDebtAndConfig(): void {
     combineLatest([
       this.getSelectedDebt(),
-      this.getRouteData()
+      this.getRouteData(),
+      this.getSelectedOperation()
     ]).pipe(
       this.getTakeUntilPipe()
-    ).subscribe(([debt, config]) => {
+    ).subscribe(([debt, config, operation]) => {
       this.selectedDebt = debt;
+      this.selectedOperation = operation;
       this.config = {
         ...config,
-        showAllOperations: false
+        showAllOperations: false,
+        deleteOperation: false
       } || {};
 
-      if (debt?.moneyOperations?.some(op => op.status !== OperationStatus.UNCHANGED) && config.showAllOperations) {
+      if (debt?.moneyOperations?.some(op => op.status !== OperationStatus.UNCHANGED) && config?.showAllOperations) {
         this.config = {
           ...config,
           showAllOperations: true
+        };
+      }
+
+      if (config?.deleteOperation && debt?.type === DebtAccountType.SINGLE_USER) {
+        this.config = {
+          ...config,
+          deleteOperation: true
         };
       }
     });
@@ -102,5 +119,9 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
     this.store.select(selectShowCanceledOperations).pipe(
       this.getTakeUntilPipe()
     ).subscribe(show => this.showAllOperations = show);
+  }
+
+  private getSelectedOperation(): Observable<Operation> {
+    return this.store.select(selectSelectedOperation);
   }
 }

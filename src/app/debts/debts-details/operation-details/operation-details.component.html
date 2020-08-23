@@ -1,0 +1,26 @@
+<div class="operation" *ngIf="showOperation; else spinner">
+  <app-key-value-field
+    key="from"
+    [value]="fromUser"
+  ></app-key-value-field>
+  <app-key-value-field
+    key="to"
+    [value]="toUser"
+  ></app-key-value-field>
+  <app-key-value-field
+    key="amount"
+    [value]="debt.currency + operation.moneyAmount.toString()"
+  ></app-key-value-field>
+  <app-key-value-field
+    key="date"
+    [value]="operation.date | date:'MMM d, y, h:mm a'"
+  ></app-key-value-field>
+  <app-key-value-field
+    key="description"
+    [value]="operation.description"
+  ></app-key-value-field>
+</div>
+
+<ng-template #spinner>
+  <app-spinner-container></app-spinner-container>
+</ng-template>

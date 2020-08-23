@@ -3,10 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { DebtsComponent } from './debts.component';
 import { DebtsListComponent } from './debts-list/debts-list.component';
 import { DebtsDetailsComponent } from './debts-details/debts-details.component';
-import { debtIdRouteParam } from '../store/debts/debts.selectors';
+import { debtIdRouteParam, operationIdRouteParam } from '../store/debts/debts.selectors';
 import { AppWrapperConfig } from '../core/modules/router';
 import { AddDebtComponent } from './add-debt/add-debt.component';
 import { AddOperationComponent } from './debts-details/add-operation/add-operation.component';
+import { OperationDetailsComponent } from './debts-details/operation-details/operation-details.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,14 @@ const routes: Routes = [
             component: AddOperationComponent,
             data: {
               back: true,
+            } as AppWrapperConfig
+          },
+          {
+            path: `:${operationIdRouteParam}`,
+            component: OperationDetailsComponent,
+            data: {
+              back: true,
+              deleteOperation: true,
             } as AppWrapperConfig
           }
         ],

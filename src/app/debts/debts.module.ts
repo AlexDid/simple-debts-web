@@ -25,6 +25,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UserSearchModule } from '../shared/modules/user-search/user-search.module';
 import { AddOperationComponent } from './debts-details/add-operation/add-operation.component';
+import { OperationDetailsComponent } from './debts-details/operation-details/operation-details.component';
+import { KeyValueFieldModule } from '../shared/modules/key-value-field/key-value-field.module';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { AddOperationComponent } from './debts-details/add-operation/add-operati
     SelectUserFormComponent,
     ConfirmScreenComponent,
     CurrencyFormComponent,
-    AddOperationComponent
+    AddOperationComponent,
+    OperationDetailsComponent
   ],
   providers: [
     DebtsService
@@ -57,7 +60,8 @@ import { AddOperationComponent } from './debts-details/add-operation/add-operati
     MatFormFieldModule,
     MatInputModule,
     MatAutocompleteModule,
-    UserSearchModule
+    UserSearchModule,
+    KeyValueFieldModule
   ]
 })
 export class DebtsModule { }

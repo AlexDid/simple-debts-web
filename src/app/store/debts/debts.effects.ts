@@ -206,6 +206,7 @@ export class DebtsEffects {
     ofType(DebtsActions.deleteOperation),
     mergeMap(({id, debtsId}) => this.operationsService.deleteOperation(id).pipe(
       switchMap(() => this.debtsService.getDebt(debtsId)),
+      tap(debt => this.router.navigate([debt.id])),
       map(debt => DebtsActions.deleteOperationSuccess({ debt })),
       catchError(error => of(DebtsActions.deleteOperationError({ error })))
     ))
