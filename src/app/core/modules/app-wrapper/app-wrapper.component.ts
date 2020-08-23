@@ -10,7 +10,7 @@ import { outsideButtonsMap } from './data';
 import { OutsideButton } from './models';
 import { Router } from '@angular/router';
 import { selectSelectedDebt, selectSelectedOperation } from '../../../store/debts/debts.selectors';
-import { Debt, DebtAccountType, Operation, OperationStatus } from '../../../store/debts/models';
+import { Debt, DebtAccountType, Operation, OperationActionDto, OperationStatus } from '../../../store/debts/models';
 import { toggleShowCanceledOperations } from '../../../store/controls/controls.actions';
 import { selectShowCanceledOperations } from '../../../store/controls/controls.selectors';
 import { combineLatest, Observable } from 'rxjs';
@@ -68,11 +68,19 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
   }
 
   deleteOperation(): void {
-    this.store.dispatch(DebtsActions.deleteOperationRequest({ debtsId: this.selectedDebt.id, id: this.selectedOperation.id }));
+    this.store.dispatch(DebtsActions.deleteOperationRequest(this.operationActionDto));
   }
 
   toggleShowCanceledOperations(): void {
     this.store.dispatch(toggleShowCanceledOperations());
+  }
+
+  acceptOperation(): void {
+    this.store.dispatch(DebtsActions.acceptOperation(this.operationActionDto));
+  }
+
+  declineOperation(): void {
+    this.store.dispatch(DebtsActions.declineOperation(this.operationActionDto));
   }
 
   private getDebtAndConfig(): void {
@@ -88,20 +96,34 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
       this.config = {
         ...config,
         showAllOperations: false,
-        deleteOperation: false
+        deleteOperation: false,
+        acceptOperation: false,
+        declineOperation: false
       } || {};
 
       if (debt?.moneyOperations?.some(op => op.status !== OperationStatus.UNCHANGED) && config?.showAllOperations) {
         this.config = {
-          ...config,
+          ...this.config,
           showAllOperations: true
         };
       }
 
       if (config?.deleteOperation && debt?.type === DebtAccountType.SINGLE_USER) {
         this.config = {
-          ...config,
+          ...this.config,
           deleteOperation: true
+        };
+      }
+
+      if (config?.acceptOperation && config?.declineOperation &&
+        debt?.type === DebtAccountType.MULTIPLE_USERS &&
+        operation?.status === OperationStatus.CREATION_AWAITING &&
+        operation?.statusAcceptor !== debt?.user?.id
+      ) {
+        this.config = {
+          ...this.config,
+          acceptOperation: true,
+          declineOperation: true
         };
       }
     });
@@ -123,5 +145,12 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
 
   private getSelectedOperation(): Observable<Operation> {
     return this.store.select(selectSelectedOperation);
+  }
+
+  private get operationActionDto(): OperationActionDto {
+    return {
+      debtsId: this.selectedDebt.id,
+      id: this.selectedOperation.id
+    };
   }
 }

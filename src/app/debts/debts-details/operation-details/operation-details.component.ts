@@ -9,10 +9,11 @@ import {
   selectSelectedDebtId,
   selectSelectedOperation
 } from '../../../store/debts/debts.selectors';
-import { Debt, Operation } from '../../../store/debts/models';
+import { Debt, Operation, OperationStatus } from '../../../store/debts/models';
 import { filter, first, tap } from 'rxjs/operators';
 import { loadDebt } from '../../../store/debts/debts.actions';
 import { combineLatest } from 'rxjs';
+import { ListItemMessage, ListItemMessageColor } from '../../../shared/modules/list/list-item/models';
 
 @Component({
   selector: 'app-operation-details',
@@ -58,6 +59,26 @@ export class OperationDetailsComponent extends SubscriptionComponent implements 
 
   get showOperation(): boolean {
     return !!this.debt && !!this.user && !!this.operation && !this.showSpinner;
+  }
+
+  get message(): ListItemMessage {
+    switch (this.operation.status) {
+      case OperationStatus.CANCELLED:
+        const canceledBy = this.operation.cancelledBy === this.user.id ? 'you' : this.debt.user.name;
+        return {
+          text: `Operation was canceled by ${canceledBy}`,
+          color: ListItemMessageColor.RED
+        };
+      case OperationStatus.CREATION_AWAITING:
+        return {
+          text: this.operation.statusAcceptor === this.user.id
+            ? 'Use buttons on the right to accept or decline operation'
+            : `Waiting for ${this.debt.user.name} to accept operation`,
+          color: ListItemMessageColor.ACCENT
+        };
+      default:
+        return null;
+    }
   }
 
   private getOperation(): void {

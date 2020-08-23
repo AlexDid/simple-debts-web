@@ -18,6 +18,18 @@
     ></app-outside-button>
 
     <app-outside-button
+      *ngIf="getButton('acceptOperation')"
+      [button]="getButton('acceptOperation')"
+      (click)="acceptOperation()"
+    ></app-outside-button>
+
+    <app-outside-button
+      *ngIf="getButton('declineOperation')"
+      [button]="getButton('declineOperation')"
+      (click)="declineOperation()"
+    ></app-outside-button>
+
+    <app-outside-button
       *ngIf="getButton('showAllOperations')"
       [button]="getButton('showAllOperations')"
       [selected]="!showAllOperations"

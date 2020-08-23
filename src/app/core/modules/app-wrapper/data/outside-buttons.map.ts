@@ -9,4 +9,6 @@ export const outsideButtonsMap = new Map<keyof AppWrapperConfig, OutsideButton>(
   ['deleteDebt', { title: 'delete debt', icon: Icons.CROSS }],
   ['showAllOperations', { title: 'only accepted operations', icon: Icons.EYE }],
   ['deleteOperation', { title: 'delete operation', icon: Icons.CROSS }],
+  ['acceptOperation', { title: 'accept operation', icon: Icons.ACCEPT }],
+  ['declineOperation', { title: 'decline operation', icon: Icons.DECLINE }],
 ]);

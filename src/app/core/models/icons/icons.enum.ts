@@ -5,4 +5,6 @@ export enum Icons {
   PLUS = 'plus',
   CROSS = 'cross',
   EYE = 'eye',
+  ACCEPT = 'accept',
+  DECLINE = 'decline'
 }

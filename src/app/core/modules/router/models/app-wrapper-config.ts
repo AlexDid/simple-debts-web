@@ -9,5 +9,7 @@ export interface AppWrapperConfig {
   showAllOperations?: boolean;
   deleteDebt?: boolean;
   deleteOperation?: boolean;
+  acceptOperation?: boolean;
+  declineOperation?: boolean;
   connectUser?: boolean;
 }

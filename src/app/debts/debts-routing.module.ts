@@ -60,6 +60,8 @@ const routes: Routes = [
             data: {
               back: true,
               deleteOperation: true,
+              acceptOperation: true,
+              declineOperation: true
             } as AppWrapperConfig
           }
         ],

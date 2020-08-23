@@ -217,6 +217,7 @@ export class DebtsEffects {
     ofType(DebtsActions.acceptOperation),
     mergeMap(({id, debtsId}) => this.operationsService.acceptOperation(id).pipe(
       switchMap(() => this.debtsService.getDebt(debtsId)),
+      tap(debt => this.router.navigate([debt.id])),
       map(debt => DebtsActions.acceptOperationSuccess({ debt })),
       catchError(error => of(DebtsActions.acceptOperationError({ error })))
     ))
@@ -227,6 +228,7 @@ export class DebtsEffects {
     ofType(DebtsActions.declineOperation),
     mergeMap(({id, debtsId}) => this.operationsService.declineOperation(id).pipe(
       switchMap(() => this.debtsService.getDebt(debtsId)),
+      tap(debt => this.router.navigate([debt.id])),
       map(debt => DebtsActions.declineOperationSuccess({ debt })),
       catchError(error => of(DebtsActions.declineOperationError({ error })))
     ))
