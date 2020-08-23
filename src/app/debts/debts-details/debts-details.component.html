@@ -11,6 +11,11 @@
     *ngIf="isDebtCreationStatus; else operations"
     [debt]="debt"
   ></app-creation-screen>
+
+  <app-user-deleted-card
+    *ngIf="isUserDeleted"
+    [debt]="debt"
+  ></app-user-deleted-card>
 </ng-template>
 
 <app-spinner-container

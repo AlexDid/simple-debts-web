@@ -35,6 +35,10 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
     return !!this.debt && this.debt.status === DebtStatus.CREATION_AWAITING;
   }
 
+  get isUserDeleted(): boolean {
+    return this.debt?.status === DebtStatus.USER_DELETED;
+  }
+
   private getSelectedDebt(): void {
     this.store.pipe(
       select(selectSelectedDebt),

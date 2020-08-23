@@ -1,0 +1,20 @@
+:host {
+  position: absolute;
+  bottom: -160px;
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    p {
+      margin: 10px 0 8px;
+    }
+
+    button {
+      height: 40px;
+    }
+  }
+}

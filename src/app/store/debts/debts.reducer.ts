@@ -157,6 +157,21 @@ export const reducer = createReducer(
     acceptingOperation: null
   })),
 
+  on(DebtsActions.acceptUserDeletedFromDebt, (state, {id}) => ({
+    ...state,
+    updatingDebt: id
+  })),
+
+  on(DebtsActions.acceptUserDeletedFromDebtSuccess, (state, {debt}) => ({
+    ...adapter.upsertOne(debt, state),
+    updatingDebt: null
+  })),
+
+  on(DebtsActions.acceptUserDeletedFromDebtError, (state) => ({
+    ...state,
+    updatingDebt: null
+  })),
+
   on(DebtsActions.loadDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
 
   on(DebtsActions.deleteDebt, (state, {debt}) => adapter.removeOne(debt.id, state)),
@@ -164,7 +179,6 @@ export const reducer = createReducer(
   on(DebtsActions.acceptMultipleDebtCreationSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.declineMultipleDebtCreationSuccess, (state, {id}) => adapter.removeOne(id, state)),
   on(DebtsActions.acceptAllOperationsSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
-  on(DebtsActions.acceptUserDeletedFromDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.connectUserToDebtSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.connectUserToDebtAcceptSuccess, (state, {debt}) => adapter.upsertOne(debt, state)),
   on(DebtsActions.connectUserToDebtDeclineSuccess, (state, {id}) => adapter.removeOne(id, state)),

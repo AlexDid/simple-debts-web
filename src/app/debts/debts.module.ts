@@ -28,6 +28,7 @@ import { AddOperationComponent } from './debts-details/add-operation/add-operati
 import { OperationDetailsComponent } from './debts-details/operation-details/operation-details.component';
 import { KeyValueFieldModule } from '../shared/modules/key-value-field/key-value-field.module';
 import { CreationScreenComponent } from './debts-details/creation-screen/creation-screen.component';
+import { UserDeletedCardComponent } from './debts-details/user-deleted-card/user-deleted-card.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { CreationScreenComponent } from './debts-details/creation-screen/creatio
     CurrencyFormComponent,
     AddOperationComponent,
     OperationDetailsComponent,
-    CreationScreenComponent
+    CreationScreenComponent,
+    UserDeletedCardComponent
   ],
   providers: [
     DebtsService
