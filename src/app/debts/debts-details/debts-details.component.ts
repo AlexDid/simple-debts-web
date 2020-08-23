@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../store';
-import { selectSelectedDebt } from '../../store/debts/debts.selectors';
+import { selectDebtUpdatingStatus, selectSelectedDebt } from '../../store/debts/debts.selectors';
 import { SubscriptionComponent } from '../../core/models';
-import { Debt } from '../../store/debts/models';
-import { filter, tap } from 'rxjs/operators';
+import { Debt, DebtStatus } from '../../store/debts/models';
+import { filter, map, tap } from 'rxjs/operators';
 import { loadDebt } from '../../store/debts/debts.actions';
 
 @Component({
@@ -16,6 +16,8 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
 
   debt: Debt;
 
+  isUpdating = false;
+
   private loaded = false;
 
   constructor(
@@ -26,6 +28,11 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
 
   ngOnInit(): void {
     this.getSelectedDebt();
+    this.getUpdatingStatus();
+  }
+
+  get isDebtCreationStatus(): boolean {
+    return !!this.debt && this.debt.status === DebtStatus.CREATION_AWAITING;
   }
 
   private getSelectedDebt(): void {
@@ -42,5 +49,12 @@ export class DebtsDetailsComponent extends SubscriptionComponent implements OnIn
       this.loaded = true;
       this.store.dispatch(loadDebt({id}));
     }
+  }
+
+  private getUpdatingStatus(): void {
+    this.store.select(selectDebtUpdatingStatus).pipe(
+      map(id => id === this.debt?.id),
+      this.getTakeUntilPipe(),
+    ).subscribe(updating => this.isUpdating = updating);
   }
 }

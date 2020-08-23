@@ -19,15 +19,15 @@
     key="description"
     [value]="operation.description"
   ></app-key-value-field>
-</div>
 
-<p
-  *ngIf="message"
-  class="message"
-  [ngClass]="message.color"
->
-  {{ message.text }}
-</p>
+  <p
+    *ngIf="message"
+    class="message"
+    [ngClass]="message.color"
+  >
+    {{ message.text }}
+  </p>
+</div>
 
 <ng-template #spinner>
   <app-spinner-container></app-spinner-container>

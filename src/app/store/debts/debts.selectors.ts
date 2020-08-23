@@ -23,6 +23,11 @@ export const selectDebtSubmittingStatus = createSelector(
   state => state.isSubmittingNewDebt
 );
 
+export const selectDebtUpdatingStatus = createSelector(
+  selectDebtsState,
+  state => state.updatingDebt
+);
+
 export const selectDebtsEntities = createSelector(
   createSelector(
     selectDebtsState,

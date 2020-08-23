@@ -11,5 +11,7 @@ export interface AppWrapperConfig {
   deleteOperation?: boolean;
   acceptOperation?: boolean;
   declineOperation?: boolean;
+  acceptDebt?: boolean;
+  declineDebt?: boolean;
   connectUser?: boolean;
 }

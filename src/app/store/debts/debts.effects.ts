@@ -127,6 +127,7 @@ export class DebtsEffects {
     ofType(DebtsActions.declineMultipleDebtCreation),
     mergeMap(({id}) => this.debtsService.declineMultipleDebtCreation(id).pipe(
       map(() => DebtsActions.declineMultipleDebtCreationSuccess({id})),
+      tap(() => this.router.navigate(['../'])),
       catchError(err => of(DebtsActions.declineMultipleDebtCreationError(err)))
     ))
   );

@@ -27,6 +27,7 @@ import { UserSearchModule } from '../shared/modules/user-search/user-search.modu
 import { AddOperationComponent } from './debts-details/add-operation/add-operation.component';
 import { OperationDetailsComponent } from './debts-details/operation-details/operation-details.component';
 import { KeyValueFieldModule } from '../shared/modules/key-value-field/key-value-field.module';
+import { CreationScreenComponent } from './debts-details/creation-screen/creation-screen.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { KeyValueFieldModule } from '../shared/modules/key-value-field/key-value
     ConfirmScreenComponent,
     CurrencyFormComponent,
     AddOperationComponent,
-    OperationDetailsComponent
+    OperationDetailsComponent,
+    CreationScreenComponent
   ],
   providers: [
     DebtsService

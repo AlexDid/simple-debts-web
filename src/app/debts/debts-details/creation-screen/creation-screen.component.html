@@ -1,0 +1,15 @@
+<app-empty-list
+  *ngIf="debt.isUserStatusAcceptor; else waiting"
+  emoji="🙋"
+  header="new debt"
+  subtitle="you've been invited to a new debt, use buttons on the right to response"
+></app-empty-list>
+
+<ng-template #waiting>
+  <app-empty-list
+    emoji="💁"
+    header="waiting..."
+    subtitle="another user should response to your request"
+  ></app-empty-list>
+</ng-template>
+

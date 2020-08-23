@@ -42,6 +42,8 @@ const routes: Routes = [
               back: true,
               refresh: true,
               deleteDebt: true,
+              acceptDebt: true,
+              declineDebt: true,
               addOperation: true,
               connectUser: true,
               showAllOperations: true,

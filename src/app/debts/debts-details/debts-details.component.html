@@ -1,6 +1,18 @@
-<app-operations-list
-  *ngIf="debt"
-  [operations]="debt.moneyOperations"
-  [userId]="debt.user.id"
-  [debtId]="debt.id"
-></app-operations-list>
+<ng-template #operationsBlock>
+  <ng-template #operations>
+    <app-operations-list
+      [operations]="debt.moneyOperations"
+      [userId]="debt.user.id"
+      [debtId]="debt.id"
+    ></app-operations-list>
+  </ng-template>
+
+  <app-creation-screen
+    *ngIf="isDebtCreationStatus; else operations"
+    [debt]="debt"
+  ></app-creation-screen>
+</ng-template>
+
+<app-spinner-container
+  *ngIf="isUpdating || !debt; else operationsBlock"
+></app-spinner-container>

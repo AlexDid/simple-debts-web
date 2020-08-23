@@ -10,7 +10,7 @@ import { outsideButtonsMap } from './data';
 import { OutsideButton } from './models';
 import { Router } from '@angular/router';
 import { selectSelectedDebt, selectSelectedOperation } from '../../../store/debts/debts.selectors';
-import { Debt, DebtAccountType, Operation, OperationActionDto, OperationStatus } from '../../../store/debts/models';
+import { Debt, DebtAccountType, DebtStatus, Operation, OperationActionDto, OperationStatus } from '../../../store/debts/models';
 import { toggleShowCanceledOperations } from '../../../store/controls/controls.actions';
 import { selectShowCanceledOperations } from '../../../store/controls/controls.selectors';
 import { combineLatest, Observable } from 'rxjs';
@@ -75,6 +75,14 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
     this.store.dispatch(toggleShowCanceledOperations());
   }
 
+  acceptDebt(): void {
+    this.store.dispatch(DebtsActions.acceptMultipleDebtCreation({ id: this.selectedDebt.id }));
+  }
+
+  declineDebt(): void {
+    this.store.dispatch(DebtsActions.declineMultipleDebtCreation({ id: this.selectedDebt.id }));
+  }
+
   acceptOperation(): void {
     this.store.dispatch(DebtsActions.acceptOperation(this.operationActionDto));
   }
@@ -98,7 +106,9 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
         showAllOperations: false,
         deleteOperation: false,
         acceptOperation: false,
-        declineOperation: false
+        declineOperation: false,
+        acceptDebt: false,
+        declineDebt: false
       } || {};
 
       if (debt?.moneyOperations?.some(op => op.status !== OperationStatus.UNCHANGED) && config?.showAllOperations) {
@@ -117,13 +127,22 @@ export class AppWrapperComponent extends SubscriptionComponent implements OnInit
 
       if (config?.acceptOperation && config?.declineOperation &&
         debt?.type === DebtAccountType.MULTIPLE_USERS &&
-        operation?.status === OperationStatus.CREATION_AWAITING &&
-        operation?.statusAcceptor !== debt?.user?.id
+        operation?.status === OperationStatus.CREATION_AWAITING
       ) {
         this.config = {
           ...this.config,
-          acceptOperation: true,
+          acceptOperation: operation?.statusAcceptor !== debt?.user?.id,
           declineOperation: true
+        };
+      }
+
+      if (config?.acceptDebt && config?.declineDebt && debt?.status === DebtStatus.CREATION_AWAITING) {
+        this.config = {
+          ...this.config,
+          acceptDebt: debt?.isUserStatusAcceptor,
+          declineDebt: true,
+          addOperation: false,
+          deleteDebt: false
         };
       }
     });
